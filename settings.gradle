@@ -1,9 +1,18 @@
 pluginManagement {
     repositories {
+        mavenCentral()
         gradlePluginPortal()
+        maven { url = 'https://maven.neoforged.net/releases'}
     }
 }
 
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
+
+rootProject.name = 'project-causality'
+
+include 'core'
+include 'common'
+// include 'sim'
+// include 'api'

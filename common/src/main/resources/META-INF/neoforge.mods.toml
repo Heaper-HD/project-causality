@@ -1,0 +1,26 @@
+license="${mod_license}"
+issueTrackerURL="https://github.com/Heaper-HD/project-causality/issues"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/"
+#logoFile="examplemod.png"
+authors="Heaper"
+description='''
+Create factories explore the world and bend reality to your will
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
