@@ -1,5 +1,10 @@
 package com.heaper.causality;
 
+import com.heaper.causality.client.appearance.AppearanceRegistry;
+import com.heaper.causality.core.material.Materials;
+import com.heaper.causality.datagen.DataGenerators;
+import com.heaper.causality.registry.ModCreateTabs;
+import com.heaper.causality.registry.ModItems;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -37,6 +42,14 @@ public class ProjectCausality {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public ProjectCausality(IEventBus modEventBus, ModContainer modContainer) {
-        LOGGER.debug("Hello from Project Causality!");
+        Materials.init();
+        AppearanceRegistry.bootstrap();
+
+        ModItems.register(modEventBus);
+        ModCreateTabs.register(modEventBus);
+
+        DataGenerators.register(modEventBus);
+
+        LOGGER.debug("Project causality loaded");
     }
 }

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/cobalt_tiny_dust",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -11513656
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/rhodium_dust",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3618606
+      }
+    ]
+  }
+}

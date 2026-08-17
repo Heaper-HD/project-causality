@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/tungsten_rod",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13487546
+      }
+    ]
+  }
+}

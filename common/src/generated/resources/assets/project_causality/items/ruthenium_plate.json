@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/ruthenium_plate",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5592396
+      }
+    ]
+  }
+}

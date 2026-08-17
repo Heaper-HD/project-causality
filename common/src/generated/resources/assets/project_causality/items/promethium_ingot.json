@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/promethium_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3616032
+      }
+    ]
+  }
+}

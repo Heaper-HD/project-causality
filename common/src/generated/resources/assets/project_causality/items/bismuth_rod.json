@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/bismuth_rod",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3628856
+      }
+    ]
+  }
+}

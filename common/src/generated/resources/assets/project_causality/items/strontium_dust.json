@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/strontium_dust",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1644856
+      }
+    ]
+  }
+}
