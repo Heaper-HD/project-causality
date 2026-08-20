@@ -4,9 +4,12 @@ import com.heaper.causality.ProjectCausality;
 import com.heaper.causality.core.material.MaterialForm;
 import com.heaper.causality.core.material.MaterialStack;
 import com.heaper.causality.material.MaterialItem;
+import com.heaper.causality.registry.ModBlocks;
 import com.heaper.causality.registry.ModItems;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.Locale;
@@ -49,6 +52,7 @@ public class MaterialLangProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add("itemGroup." + ProjectCausality.MODID + ".elements", "Project Causality Elements");
+        add("itemGroup." + ProjectCausality.MODID + ".blocks", "Project Causality Blocks");
 
         for (Map.Entry<MaterialStack, DeferredItem<MaterialItem>> entry : ModItems.all().entrySet()) {
             MaterialStack stack = entry.getKey();
@@ -58,6 +62,12 @@ public class MaterialLangProvider extends LanguageProvider {
                     "%s " + titleCase(stack.form().name().toLowerCase(Locale.ROOT)));
 
             add(entry.getValue().get(), String.format(pattern, materialName));
+        }
+
+        for (Map.Entry<ModBlocks.ComponentKey, DeferredBlock<Block>> entry : ModBlocks.all().entrySet()) {
+            ModBlocks.ComponentKey key = entry.getKey();
+            add(entry.getValue().get(),
+                    titleCase(key.material().id()) + " " + titleCase(key.type().id()));
         }
     }
 

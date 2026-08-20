@@ -5,15 +5,19 @@ import com.heaper.causality.client.appearance.Appearance;
 import com.heaper.causality.client.appearance.AppearanceRegistry;
 import com.heaper.causality.core.material.MaterialStack;
 import com.heaper.causality.material.MaterialItem;
+import com.heaper.causality.registry.ModBlocks;
 import com.heaper.causality.registry.ModItems;
 import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.Map;
 
@@ -49,6 +53,26 @@ public class MaterialModelProvider extends ModelProvider {
                 itemModels.itemModelOutput.accept(item,
                         ItemModelUtils.tintedModel(model, new Constant(appearance.color())));
             }
+        }
+
+        for (Map.Entry<ModBlocks.ComponentKey, DeferredBlock<Block>> entry : ModBlocks.all().entrySet()) {
+            ModBlocks.ComponentKey key = entry.getKey();
+            Block block = entry.getValue().get();
+            Appearance appearance = AppearanceRegistry.get(key.material());
+
+            Identifier texture = Identifier.fromNamespaceAndPath(
+                    ProjectCausality.MODID,
+                    "block/" + appearance.set().folder() + "/" + key.type().id());
+
+            Identifier model = ModelTemplates.CUBE_ALL.create(
+                    block,
+                    TextureMapping.cube(new Material(texture)),
+                    blockModels.modelOutput);
+
+            MultiVariant variant = BlockModelGenerators.plainVariant(model);
+
+            blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
+            blockModels.registerSimpleItemModel(block, model);
         }
     }
 }

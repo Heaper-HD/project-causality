@@ -21,24 +21,38 @@ public final class Elements {
             .element("Li", 3, 6.94, ALKALI_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 15)
+            .property(MaterialProperty.HARDNESS, 0.6)
+            .property(MaterialProperty.MELTING_POINT, 454)
+            .property(MaterialProperty.DENSITY, 0.53)
             .build();
 
     public static final Material BERYLLIUM = Material.builder("beryllium")
             .element("Be", 4, 9.0122, ALKALINE_EARTH_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 370)
+            .property(MaterialProperty.HARDNESS, 5.5)
+            .property(MaterialProperty.MELTING_POINT, 1560)
+            .property(MaterialProperty.DENSITY, 1.85)
             .build();
 
     public static final Material BORON = Material.builder("boron")
             .element("B", 5, 10.81, METALLOID)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.HARDNESS, 9.3)
+            .property(MaterialProperty.MELTING_POINT, 317)
+            .property(MaterialProperty.DENSITY, 1.82)
             .build();
 
     public static final Material CARBON = Material.builder("carbon")
             .element("C", 6, 12.011, REACTIVE_NONMETAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.HARDNESS, 4.0)
+            .property(MaterialProperty.MELTING_POINT, 3800)
+            .property(MaterialProperty.DENSITY, 2.27)
             .build();
 
     public static final Material NITROGEN = Material.builder("nitrogen")
@@ -69,36 +83,57 @@ public final class Elements {
             .element("Na", 11, 22.990, ALKALI_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 10)
+            .property(MaterialProperty.HARDNESS, 0.5)
+            .property(MaterialProperty.MELTING_POINT, 371)
+            .property(MaterialProperty.DENSITY, 0.97)
             .build();
 
     public static final Material MAGNESIUM = Material.builder("magnesium")
             .element("Mg", 12, 24.305, ALKALINE_EARTH_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 130)
+            .property(MaterialProperty.HARDNESS, 2.5)
+            .property(MaterialProperty.MELTING_POINT, 923)
+            .property(MaterialProperty.DENSITY, 1.74)
             .build();
 
     public static final Material ALUMINIUM = Material.builder("aluminium")
             .element("Al", 13, 26.982, POST_TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 90)
+            .property(MaterialProperty.HARDNESS, 2.75)
+            .property(MaterialProperty.MELTING_POINT, 933)
+            .property(MaterialProperty.DENSITY, 2.70)
             .build();
 
     public static final Material SILICON = Material.builder("silicon")
             .element("Si", 14, 28.085, METALLOID)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.HARDNESS, 6.5)
+            .property(MaterialProperty.MELTING_POINT, 1687)
+            .property(MaterialProperty.DENSITY, 2.33)
             .build();
 
     public static final Material PHOSPHORUS = Material.builder("phosphorus")
             .element("P", 15, 30.974, REACTIVE_NONMETAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.HARDNESS, 0.5)
+            .property(MaterialProperty.MELTING_POINT, 317)
+            .property(MaterialProperty.DENSITY, 1.82)
             .build();
 
     public static final Material SULFUR = Material.builder("sulfur")
             .element("S", 16, 32.06, REACTIVE_NONMETAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.HARDNESS, 2.0)
+            .property(MaterialProperty.MELTING_POINT, 388)
+            .property(MaterialProperty.DENSITY, 2.07)
             .build();
 
     public static final Material CHLORINE = Material.builder("chlorine")
@@ -117,12 +152,20 @@ public final class Elements {
             .element("K", 19, 39.098, ALKALI_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 5)
+            .property(MaterialProperty.HARDNESS, 1.75)
+            .property(MaterialProperty.MELTING_POINT, 337)
+            .property(MaterialProperty.DENSITY, 0.86)
             .build();
 
     public static final Material CALCIUM = Material.builder("calcium")
             .element("Ca", 20, 40.078, ALKALINE_EARTH_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 110)
+            .property(MaterialProperty.HARDNESS, 1.75)
+            .property(MaterialProperty.MELTING_POINT, 1115)
+            .property(MaterialProperty.DENSITY, 1.55)
             .build();
 
     public static final Material SCANDIUM = Material.builder("scandium")
@@ -135,72 +178,118 @@ public final class Elements {
             .element("Ti", 22, 47.867, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 434)
+            .property(MaterialProperty.HARDNESS, 6.0)
+            .property(MaterialProperty.MELTING_POINT, 1941)
+            .property(MaterialProperty.DENSITY, 4.51)
             .build();
 
     public static final Material VANADIUM = Material.builder("vanadium")
             .element("V", 23, 50.942, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 800)
+            .property(MaterialProperty.HARDNESS, 7.0)
+            .property(MaterialProperty.MELTING_POINT, 2183)
+            .property(MaterialProperty.DENSITY, 6.11)
             .build();
 
     public static final Material CHROMIUM = Material.builder("chromium")
             .element("Cr", 24, 51.996, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 282)
+            .property(MaterialProperty.HARDNESS, 8.5)
+            .property(MaterialProperty.MELTING_POINT, 2180)
+            .property(MaterialProperty.DENSITY, 7.19)
             .build();
 
     public static final Material MANGANESE = Material.builder("manganese")
             .element("Mn", 25, 54.938, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 500)
+            .property(MaterialProperty.HARDNESS, 6.0)
+            .property(MaterialProperty.MELTING_POINT, 1519)
+            .property(MaterialProperty.DENSITY, 7.21)
             .build();
 
     public static final Material IRON = Material.builder("iron")
             .element("Fe", 26, 55.845, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 350)
+            .property(MaterialProperty.HARDNESS, 4.0)
+            .property(MaterialProperty.MELTING_POINT, 1811)
+            .property(MaterialProperty.DENSITY, 7.87)
             .build();
 
     public static final Material COBALT = Material.builder("cobalt")
             .element("Co", 27, 58.933, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 760)
+            .property(MaterialProperty.HARDNESS, 5.0)
+            .property(MaterialProperty.MELTING_POINT, 1768)
+            .property(MaterialProperty.DENSITY, 8.90)
             .build();
 
     public static final Material NICKEL = Material.builder("nickel")
             .element("Ni", 28, 58.693, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 317)
+            .property(MaterialProperty.HARDNESS, 4.0)
+            .property(MaterialProperty.MELTING_POINT, 1728)
+            .property(MaterialProperty.DENSITY, 8.91)
             .build();
 
     public static final Material COPPER = Material.builder("copper")
             .element("Cu", 29, 63.546, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 210)
+            .property(MaterialProperty.HARDNESS, 3.0)
+            .property(MaterialProperty.MELTING_POINT, 1358)
+            .property(MaterialProperty.DENSITY, 8.96)
             .build();
 
     public static final Material ZINC = Material.builder("zinc")
             .element("Zn", 30, 65.38, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 110)
+            .property(MaterialProperty.HARDNESS, 2.5)
+            .property(MaterialProperty.MELTING_POINT, 693)
+            .property(MaterialProperty.DENSITY, 7.14)
             .build();
 
     public static final Material GALLIUM = Material.builder("gallium")
             .element("Ga", 31, 69.723, POST_TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 20)
+            .property(MaterialProperty.HARDNESS, 1.5)
+            .property(MaterialProperty.MELTING_POINT, 303)
+            .property(MaterialProperty.DENSITY, 5.91)
             .build();
 
     public static final Material GERMANIUM = Material.builder("germanium")
             .element("Ge", 32, 72.630, METALLOID)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.HARDNESS, 6.0)
+            .property(MaterialProperty.MELTING_POINT, 1211)
+            .property(MaterialProperty.DENSITY, 5.32)
             .build();
 
     public static final Material ARSENIC = Material.builder("arsenic")
             .element("As", 33, 74.922, METALLOID)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.HARDNESS, 3.5)
+            .property(MaterialProperty.MELTING_POINT, 1090)
+            .property(MaterialProperty.DENSITY, 5.73)
             .build();
 
     public static final Material SELENIUM = Material.builder("selenium")
@@ -243,18 +332,30 @@ public final class Elements {
             .element("Zr", 40, 91.224, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 330)
+            .property(MaterialProperty.HARDNESS, 5.0)
+            .property(MaterialProperty.MELTING_POINT, 2128)
+            .property(MaterialProperty.DENSITY, 6.52)
             .build();
 
     public static final Material NIOBIUM = Material.builder("niobium")
             .element("Nb", 41, 92.906, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 275)
+            .property(MaterialProperty.HARDNESS, 6.0)
+            .property(MaterialProperty.MELTING_POINT, 3290)
+            .property(MaterialProperty.DENSITY, 8.57)
             .build();
 
     public static final Material MOLYBDENUM = Material.builder("molybdenum")
             .element("Mo", 42, 95.95, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 550)
+            .property(MaterialProperty.HARDNESS, 5.5)
+            .property(MaterialProperty.MELTING_POINT, 2896)
+            .property(MaterialProperty.DENSITY, 10.28)
             .build();
 
     public static final Material TECHNETIUM = Material.builder("technetium")
@@ -267,6 +368,10 @@ public final class Elements {
             .element("Ru", 44, 101.07, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 500)
+            .property(MaterialProperty.HARDNESS, 6.5)
+            .property(MaterialProperty.MELTING_POINT, 2607)
+            .property(MaterialProperty.DENSITY, 12.45)
             .build();
 
     public static final Material RHODIUM = Material.builder("rhodium")
@@ -279,30 +384,51 @@ public final class Elements {
             .element("Pd", 46, 106.42, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 180)
+            .property(MaterialProperty.HARDNESS, 4.75)
+            .property(MaterialProperty.MELTING_POINT, 1828)
+            .property(MaterialProperty.DENSITY, 12.02)
+            .excludeComponent("casing")
             .build();
 
     public static final Material SILVER = Material.builder("silver")
             .element("Ag", 47, 107.87, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 140)
+            .property(MaterialProperty.HARDNESS, 2.5)
+            .property(MaterialProperty.MELTING_POINT, 1235)
+            .property(MaterialProperty.DENSITY, 10.49)
             .build();
 
     public static final Material CADMIUM = Material.builder("cadmium")
             .element("Cd", 48, 112.41, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 72)
+            .property(MaterialProperty.HARDNESS, 2.0)
+            .property(MaterialProperty.MELTING_POINT, 594)
+            .property(MaterialProperty.DENSITY, 8.65)
             .build();
 
     public static final Material INDIUM = Material.builder("indium")
             .element("In", 49, 114.82, POST_TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 4)
+            .property(MaterialProperty.HARDNESS, 1.2)
+            .property(MaterialProperty.MELTING_POINT, 430)
+            .property(MaterialProperty.DENSITY, 7.31)
             .build();
 
     public static final Material TIN = Material.builder("tin")
             .element("Sn", 50, 118.71, POST_TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 15)
+            .property(MaterialProperty.HARDNESS, 1.5)
+            .property(MaterialProperty.MELTING_POINT, 505)
+            .property(MaterialProperty.DENSITY, 7.31)
             .build();
 
     public static final Material ANTIMONY = Material.builder("antimony")
@@ -435,48 +561,80 @@ public final class Elements {
             .element("Hf", 72, 178.49, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 485)
+            .property(MaterialProperty.HARDNESS, 5.5)
+            .property(MaterialProperty.MELTING_POINT, 2506)
+            .property(MaterialProperty.DENSITY, 13.31)
             .build();
 
     public static final Material TANTALUM = Material.builder("tantalum")
             .element("Ta", 73, 180.95, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 200)
+            .property(MaterialProperty.HARDNESS, 6.5)
+            .property(MaterialProperty.MELTING_POINT, 3290)
+            .property(MaterialProperty.DENSITY, 16.65)
             .build();
 
     public static final Material TUNGSTEN = Material.builder("tungsten")
             .element("W", 74, 183.84, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 980)
+            .property(MaterialProperty.HARDNESS, 7.5)
+            .property(MaterialProperty.MELTING_POINT, 3695)
+            .property(MaterialProperty.DENSITY, 19.25)
             .build();
 
     public static final Material RHENIUM = Material.builder("rhenium")
             .element("Re", 75, 186.21, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 1070)
+            .property(MaterialProperty.HARDNESS, 7.0)
+            .property(MaterialProperty.MELTING_POINT, 3459)
+            .property(MaterialProperty.DENSITY, 21.02)
             .build();
 
     public static final Material OSMIUM = Material.builder("osmium")
             .element("Os", 76, 190.23, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 1000)
+            .property(MaterialProperty.HARDNESS, 7.0)
+            .property(MaterialProperty.MELTING_POINT, 3306)
+            .property(MaterialProperty.DENSITY, 22.59)
             .build();
 
     public static final Material IRIDIUM = Material.builder("iridium")
             .element("Ir", 77, 192.22, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 2000)
+            .property(MaterialProperty.HARDNESS, 6.5)
+            .property(MaterialProperty.MELTING_POINT, 2719)
+            .property(MaterialProperty.DENSITY, 22.56)
             .build();
 
     public static final Material PLATINUM = Material.builder("platinum")
             .element("Pt", 78, 195.08, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 125)
+            .property(MaterialProperty.HARDNESS, 3.5)
+            .property(MaterialProperty.MELTING_POINT, 2041)
+            .property(MaterialProperty.DENSITY, 21.45)
             .build();
 
     public static final Material GOLD = Material.builder("gold")
             .element("Au", 79, 196.97, TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 120)
+            .property(MaterialProperty.HARDNESS, 2.5)
+            .property(MaterialProperty.MELTING_POINT, 1337)
+            .property(MaterialProperty.DENSITY, 19.30)
             .build();
 
     public static final Material MERCURY = Material.builder("mercury")
@@ -495,12 +653,20 @@ public final class Elements {
             .element("Pb", 82, 207.2, POST_TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 18)
+            .property(MaterialProperty.HARDNESS, 1.5)
+            .property(MaterialProperty.MELTING_POINT, 601)
+            .property(MaterialProperty.DENSITY, 11.34)
             .build();
 
     public static final Material BISMUTH = Material.builder("bismuth")
             .element("Bi", 83, 208.98, POST_TRANSITION_METAL)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 50)
+            .property(MaterialProperty.HARDNESS, 2.25)
+            .property(MaterialProperty.MELTING_POINT, 545)
+            .property(MaterialProperty.DENSITY, 9.78)
             .build();
 
     public static final Material POLONIUM = Material.builder("polonium")
@@ -543,6 +709,10 @@ public final class Elements {
             .element("Th", 90, 232.04, ACTINIDE)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 190)
+            .property(MaterialProperty.HARDNESS, 3.0)
+            .property(MaterialProperty.MELTING_POINT, 2115)
+            .property(MaterialProperty.DENSITY, 11.72)
             .build();
 
     public static final Material PROTACTINIUM = Material.builder("protactinium")
@@ -555,6 +725,10 @@ public final class Elements {
             .element("U", 92, 238.03, ACTINIDE)
             .property(MaterialProperty.OCCURRENCE, NATURAL)
             .property(MaterialProperty.STATE, SOLID)
+            .property(MaterialProperty.TENSILE_STRENGTH, 620)
+            .property(MaterialProperty.HARDNESS, 6.0)
+            .property(MaterialProperty.MELTING_POINT, 1405)
+            .property(MaterialProperty.DENSITY, 19.05)
             .build();
 
     public static final Material NEPTUNIUM = Material.builder("neptunium")
