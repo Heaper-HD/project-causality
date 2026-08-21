@@ -2,6 +2,9 @@ package com.heaper.causality.block.entity;
 
 import com.heaper.causality.core.material.Material;
 import com.heaper.causality.core.material.MaterialRegistry;
+import com.heaper.causality.core.recipe.MachineRecipe;
+import com.heaper.causality.core.recipe.ProcessType;
+import com.heaper.causality.core.recipe.RecipeRegistry;
 import com.heaper.causality.core.spec.SpecSheet;
 import com.heaper.causality.multiblock.FormationResult;
 import com.heaper.causality.multiblock.MultiblockDefinition;
@@ -9,6 +12,7 @@ import com.heaper.causality.multiblock.SpecCalculator;
 import com.heaper.causality.multiblock.StructureIndex;
 import com.heaper.causality.port.ItemPort;
 import com.heaper.causality.port.MachinePort;
+import com.heaper.causality.recipe.MachineProcessor;
 import com.heaper.causality.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MultiblockControllerBE extends BlockEntity {
+public class CrusherControllerBE extends BlockEntity {
     private static final int DATA_VERSION = 1;
 
     private final MultiblockDefinition definition;
@@ -37,8 +41,12 @@ public class MultiblockControllerBE extends BlockEntity {
     private List<BlockPos> inputPorts = List.of();
     private List<BlockPos> outputPorts = List.of();
 
-    public MultiblockControllerBE(BlockPos pos, BlockState state, MultiblockDefinition definition) {
-        super(ModBlockEntities.MULTIBLOCK_CONTROLLER.get(), pos, state);
+    private String activeRecipeId = null;
+
+    private int progress = 0;
+
+    public CrusherControllerBE(BlockPos pos, BlockState state, MultiblockDefinition definition) {
+        super(ModBlockEntities.CRUSHER_CONTROLLER.get(), pos, state);
         this.definition = definition;
     }
 
@@ -166,6 +174,9 @@ public class MultiblockControllerBE extends BlockEntity {
 
         ValueOutput mats = output.child("Materials");
         materials.forEach((material, count) -> mats.putInt(material.id(), count));
+
+        if (activeRecipeId != null) output.putString("Recipe", activeRecipeId);
+        output.putInt("Progress", progress);
     }
 
     @Override
@@ -189,5 +200,49 @@ public class MultiblockControllerBE extends BlockEntity {
 
         materials = Map.copyOf(loaded);
         spec = SpecCalculator.fromCasings(materials);
+
+        activeRecipeId = input.getStringOr("Recipe", "").isEmpty()
+                ? null : input.getStringOr("Recipe", "");
+        progress = input.getIntOr("Progress", 0);
+    }
+
+    public void serverTick() {
+        if (!formed || level == null ) return;
+
+        ProcessType process = definition.processType();
+        if (process == null) return;
+
+        List<ItemPort> inputs = itemInputs();
+        List<ItemPort> outputs = itemOutputs();
+
+        if (activeRecipeId == null) {
+            if (level.getGameTime() % 20 != 0) return;
+
+            MachineProcessor.findRunnable(process, spec, inputs, outputs)
+                    .ifPresent(recipe -> {
+                        activeRecipeId = recipe.id();
+                        progress = 0;
+                        setChanged();
+                    });
+            return;
+        }
+
+        MachineRecipe recipe = RecipeRegistry.find(activeRecipeId).orElse(null);
+        if (recipe == null) {
+            activeRecipeId = null;
+            progress = 0;
+            setChanged();
+            return;
+        }
+
+        progress++;
+
+        if (progress < recipe.durationTicks()) return;
+
+        if (MachineProcessor.complete(recipe, inputs, outputs, level.getRandom())) {
+            activeRecipeId = null;
+            progress = 0;
+        }
+        setChanged();
     }
 }

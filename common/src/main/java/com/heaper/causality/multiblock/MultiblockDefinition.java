@@ -1,5 +1,7 @@
 package com.heaper.causality.multiblock;
 
+import com.heaper.causality.core.recipe.ProcessType;
+
 public interface MultiblockDefinition {
 
     String id();
@@ -16,4 +18,6 @@ public interface MultiblockDefinition {
     default PortRequirements portRequirements() {
         return PortRequirements.NONE;
     }
+
+    default ProcessType processType() { return null; }
 }

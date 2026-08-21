@@ -2,10 +2,9 @@ package com.heaper.causality.registry;
 
 import com.heaper.causality.ProjectCausality;
 import com.heaper.causality.block.ItemPortBlock;
-import com.heaper.causality.block.MultiblockControllerBlock;
+import com.heaper.causality.block.CrusherControllerBlock;
 import com.heaper.causality.block.entity.ItemPortBE;
-import com.heaper.causality.block.entity.MultiblockControllerBE;
-import com.heaper.causality.port.ItemPort;
+import com.heaper.causality.block.entity.CrusherControllerBE;
 import com.heaper.causality.port.PortDirection;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,16 +22,16 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ProjectCausality.MODID);
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MultiblockControllerBE>>
-            MULTIBLOCK_CONTROLLER = BLOCK_ENTITIES.register(
-                    "multiblock_controller",
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrusherControllerBE>>
+            CRUSHER_CONTROLLER = BLOCK_ENTITIES.register(
+                    "crusher_controller",
             () -> new BlockEntityType<>(
                     (pos, state) -> {
-                        if (state.getBlock() instanceof MultiblockControllerBlock c)
-                            return new MultiblockControllerBE(pos, state, c.definition());
-                        return new MultiblockControllerBE(pos, state, null);
+                        if (state.getBlock() instanceof CrusherControllerBlock c)
+                            return new CrusherControllerBE(pos, state, c.definition());
+                        return new CrusherControllerBE(pos, state, null);
                     },
-                    Set.of(ModBlocks.TEST_CONTROLLER.get())));
+                    Set.of(ModBlocks.CRUSHER_CONTROLLER.get())));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ItemPortBE>>
             ITEM_PORT = BLOCK_ENTITIES.register("item_port",

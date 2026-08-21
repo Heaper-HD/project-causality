@@ -2,14 +2,13 @@ package com.heaper.causality.registry;
 
 import com.heaper.causality.ProjectCausality;
 import com.heaper.causality.block.ItemPortBlock;
-import com.heaper.causality.block.MultiblockControllerBlock;
+import com.heaper.causality.block.CrusherControllerBlock;
 import com.heaper.causality.component.ComponentType;
 import com.heaper.causality.component.ComponentTypes;
 import com.heaper.causality.core.material.Material;
 import com.heaper.causality.core.material.MaterialRegistry;
 import com.heaper.causality.multiblock.Multiblocks;
 import com.heaper.causality.port.PortDirection;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -36,18 +35,18 @@ public final class ModBlocks {
 
     public record ComponentKey(ComponentType type, Material material) {}
 
-    public static final DeferredBlock<MultiblockControllerBlock> TEST_CONTROLLER =
+    public static final DeferredBlock<CrusherControllerBlock> CRUSHER_CONTROLLER =
             BLOCKS.registerBlock(
-                    "test_controller",
-                    props -> new MultiblockControllerBlock(Multiblocks.TEST_3X3, props),
+                    "crusher_controller",
+                    props -> new CrusherControllerBlock(Multiblocks.TEST_3X3, props),
                     () -> BlockBehaviour.Properties.of()
                             .mapColor(MapColor.METAL)
                             .strength(5.0f, 6.0f)
                             .sound(SoundType.METAL)
                             .requiresCorrectToolForDrops());
 
-    public static final DeferredItem<BlockItem> TEST_CONTROLLER_ITEM =
-            ModItems.ITEMS.registerSimpleBlockItem("test_controller", TEST_CONTROLLER);
+    public static final DeferredItem<BlockItem> CRUSHER_CONTROLLER_ITEM =
+            ModItems.ITEMS.registerSimpleBlockItem("crusher_controller", CRUSHER_CONTROLLER);
 
     public static final DeferredBlock<ItemPortBlock> ITEM_INPUT_PORT =
             BLOCKS.registerBlock(
