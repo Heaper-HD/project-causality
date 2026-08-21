@@ -19,6 +19,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
+
+import java.util.List;
 import java.util.Map;
 
 public class MaterialModelProvider extends ModelProvider {
@@ -72,6 +74,23 @@ public class MaterialModelProvider extends ModelProvider {
             MultiVariant variant = BlockModelGenerators.plainVariant(model);
 
             blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
+            blockModels.registerSimpleItemModel(block, model);
+        }
+
+        for (Block block : List.of(
+                ModBlocks.CRUSHER_CONTROLLER.get(),
+                ModBlocks.ITEM_INPUT_PORT.get(),
+                ModBlocks.ITEM_OUTPUT_PORT.get())) {
+
+            // reuse an existing casing texture — placeholder until real art
+            Identifier texture = Identifier.fromNamespaceAndPath(
+                    ProjectCausality.MODID, "block/metallic/casing");
+
+            Identifier model = ModelTemplates.CUBE_ALL.create(
+                    block, TextureMapping.cube(new Material(texture)), blockModels.modelOutput);
+
+            blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
+                    block, BlockModelGenerators.plainVariant(model)));
             blockModels.registerSimpleItemModel(block, model);
         }
     }

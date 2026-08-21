@@ -1,0 +1,35 @@
+{
+  "duration": 180,
+  "id": "mill_titanium_sand",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "crushed",
+      "material": "titanium_sand"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "chance": 0.2,
+      "form": "dust",
+      "material": "magnetite"
+    },
+    {
+      "type": "material",
+      "chance": 0.51,
+      "form": "dust",
+      "material": "rutile"
+    },
+    {
+      "type": "material",
+      "chance": 0.85,
+      "form": "dust",
+      "material": "silica"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 240.0
+  }
+}

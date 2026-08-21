@@ -1,0 +1,29 @@
+{
+  "duration": 160,
+  "id": "mill_banded_iron",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "crushed",
+      "material": "banded_iron"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "chance": 0.99,
+      "form": "dust",
+      "material": "hematite"
+    },
+    {
+      "type": "material",
+      "chance": 0.54,
+      "form": "dust",
+      "material": "silica"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 200.0
+  }
+}

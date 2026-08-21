@@ -1,0 +1,23 @@
+{
+  "duration": 160,
+  "id": "crush_banded_iron",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "banded_iron"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "banded_iron"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 200.0
+  }
+}

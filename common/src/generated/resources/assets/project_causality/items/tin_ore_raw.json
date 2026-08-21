@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/tin_ore_raw",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5197648
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "duration": 180,
+  "id": "crush_titanium_sand",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "titanium_sand"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "titanium_sand"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 240.0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "duration": 170,
+  "id": "crush_magnetite_ore",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "magnetite_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "magnetite_ore"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 220.0
+  }
+}

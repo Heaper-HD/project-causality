@@ -1,0 +1,35 @@
+{
+  "duration": 140,
+  "id": "mill_copper_ore",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "crushed",
+      "material": "copper_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "chance": 0.34,
+      "form": "dust",
+      "material": "pyrite"
+    },
+    {
+      "type": "material",
+      "chance": 0.77,
+      "form": "dust",
+      "material": "chalcopyrite"
+    },
+    {
+      "type": "material",
+      "chance": 0.48,
+      "form": "dust",
+      "material": "silica"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 160.0
+  }
+}

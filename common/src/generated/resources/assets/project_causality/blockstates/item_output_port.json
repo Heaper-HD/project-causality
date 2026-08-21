@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "project_causality:block/item_output_port"
+    }
+  }
+}

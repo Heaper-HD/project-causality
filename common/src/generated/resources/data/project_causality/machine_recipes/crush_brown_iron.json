@@ -1,0 +1,23 @@
+{
+  "duration": 140,
+  "id": "crush_brown_iron",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "brown_iron"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "brown_iron"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 160.0
+  }
+}

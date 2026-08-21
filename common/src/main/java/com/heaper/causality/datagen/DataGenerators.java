@@ -1,6 +1,7 @@
 package com.heaper.causality.datagen;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
@@ -14,7 +15,10 @@ public final class DataGenerators {
 
     public static void gatherData(GatherDataEvent.Client event) {
         DataGenerator generator = event.getGenerator();
-        generator.addProvider(true, new MaterialLangProvider (generator.getPackOutput()));
-        generator.addProvider(true, new MaterialModelProvider(generator.getPackOutput()));
+        PackOutput output = generator.getPackOutput();
+
+        generator.addProvider(true, new MaterialLangProvider (output));
+        generator.addProvider(true, new MaterialModelProvider(output));
+        generator.addProvider(true, new MachineRecipeProvider(output));
     }
 }

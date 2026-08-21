@@ -1,0 +1,23 @@
+{
+  "duration": 140,
+  "id": "crush_copper_ore",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "copper_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "copper_ore"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 160.0
+  }
+}

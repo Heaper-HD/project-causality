@@ -53,6 +53,9 @@ public class MaterialLangProvider extends LanguageProvider {
     protected void addTranslations() {
         add("itemGroup." + ProjectCausality.MODID + ".elements", "Project Causality Elements");
         add("itemGroup." + ProjectCausality.MODID + ".blocks", "Project Causality Blocks");
+        add(ModBlocks.CRUSHER_CONTROLLER.get(), "Crusher Controller");
+        add(ModBlocks.ITEM_INPUT_PORT.get(), "Item Input Port");
+        add(ModBlocks.ITEM_OUTPUT_PORT.get(), "Item Output Port");
 
         for (Map.Entry<MaterialStack, DeferredItem<MaterialItem>> entry : ModItems.all().entrySet()) {
             MaterialStack stack = entry.getKey();

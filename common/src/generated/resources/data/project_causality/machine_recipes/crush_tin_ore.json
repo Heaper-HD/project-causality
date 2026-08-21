@@ -1,0 +1,23 @@
+{
+  "duration": 180,
+  "id": "crush_tin_ore",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "tin_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "tin_ore"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 240.0
+  }
+}

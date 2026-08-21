@@ -1,0 +1,29 @@
+{
+  "duration": 170,
+  "id": "mill_magnetite_ore",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "crushed",
+      "material": "magnetite_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "chance": 0.85,
+      "form": "dust",
+      "material": "magnetite"
+    },
+    {
+      "type": "material",
+      "chance": 0.51,
+      "form": "dust",
+      "material": "silica"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 220.0
+  }
+}

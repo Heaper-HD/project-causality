@@ -1,0 +1,35 @@
+{
+  "duration": 140,
+  "id": "mill_brown_iron",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "crushed",
+      "material": "brown_iron"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "chance": 0.31,
+      "form": "dust",
+      "material": "alumina"
+    },
+    {
+      "type": "material",
+      "chance": 0.71,
+      "form": "dust",
+      "material": "hematite"
+    },
+    {
+      "type": "material",
+      "chance": 0.37,
+      "form": "dust",
+      "material": "silica"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 160.0
+  }
+}
