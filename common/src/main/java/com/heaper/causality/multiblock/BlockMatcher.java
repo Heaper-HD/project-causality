@@ -1,7 +1,9 @@
 package com.heaper.causality.multiblock;
 
 import com.heaper.causality.block.ComponentBlock;
+import com.heaper.causality.block.ItemPortBlock;
 import com.heaper.causality.component.ComponentType;
+import com.heaper.causality.component.ComponentTypes;
 import com.heaper.causality.core.material.Material;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -121,5 +123,11 @@ public interface BlockMatcher {
                 return description;
             }
         };
+    }
+
+    static BlockMatcher wall() {
+        return anyOf(
+                component(ComponentTypes.CASING),
+                blockType(ItemPortBlock.class, "an item port"));
     }
 }

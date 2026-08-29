@@ -20,11 +20,8 @@ public class ItemPortMenu extends AbstractContainerMenu {
         super(ModMenus.ITEM_PORT.get(), containerId);
         this.port = port;
         this.portSlots = port.storage().size();
-        boolean allowInsert = port.portDirection() == PortDirection.INPUT;
 
-        int startX = (176 - portSlots * 18) / 2;
-        for (int i = 0; i < portSlots; i++)
-            addSlot(new ResourceHandlerSlot(port.storage(), i, startX + i * 18, 35, allowInsert));
+        layoutPortSlots(port);
 
         for (int row = 0; row < 3; row++)
             for (int col = 0; col < 9; col++)
@@ -33,6 +30,23 @@ public class ItemPortMenu extends AbstractContainerMenu {
 
         for (int col = 0; col < 9; col++)
             addSlot(new Slot(playerInventory, col, 8 + col * 18, 142));
+    }
+
+    private void layoutPortSlots(ItemPortBE port) {
+        int count = port.storage().size();
+        int columns = count <= 1 ? 1 : count <= 4 ? 2 : 4;
+        int rows = (int) Math.ceil(count / (double) columns);
+
+        int originX = 88 - (columns * 18 / 2);
+        int originY = 35 - (rows * 18) / 2 + 9;
+
+        boolean allowInsert = port.portDirection() == PortDirection.INPUT;
+
+        for (int i = 0; i < count; i++)
+            addSlot(new ResourceHandlerSlot(port.storage(), i,
+                    originX + (i % columns) * 18,
+                    originY + (i / columns) * 18,
+                    allowInsert));
     }
 
     private static ItemPortBE resolve(Inventory inventory, BlockPos blockPos) {

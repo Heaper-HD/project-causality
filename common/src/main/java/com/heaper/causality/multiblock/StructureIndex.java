@@ -1,6 +1,6 @@
 package com.heaper.causality.multiblock;
 
-import com.heaper.causality.block.entity.CrusherControllerBE;
+import com.heaper.causality.block.entity.MultiblockControllerBE;
 import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -48,7 +48,7 @@ public final class StructureIndex {
         BlockPos controllerPos = ownerOf(level, pos);
         if (controllerPos == null) return;
 
-        if (level.getBlockEntity(controllerPos) instanceof CrusherControllerBE be)
+        if (level.getBlockEntity(controllerPos) instanceof MultiblockControllerBE be)
             be.invalidateStructure();
         else
 

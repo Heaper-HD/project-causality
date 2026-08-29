@@ -49,9 +49,6 @@ public final class StructurePattern {
             }
         }
 
-        String portError = ports.checkOrNull(inputs.size(), outputs.size());
-        if (portError != null) return new FormationResult.PortFailure(portError);
-
         return new FormationResult.Success(
                 List.copyOf(found), Map.copyOf(counts),
                 List.copyOf(inputs), List.copyOf(outputs));
@@ -78,6 +75,10 @@ public final class StructurePattern {
         public Builder where(char symbol, BlockMatcher matcher) {
             matchers.put(symbol, matcher);
             return this;
+        }
+
+        public Builder wall(char symbol) {
+            return where(symbol, BlockMatcher.wall());
         }
 
         public StructurePattern build() {

@@ -1,13 +1,13 @@
 package com.heaper.causality.block.entity;
 
-import com.heaper.causality.ProjectCausality;
+import com.heaper.causality.block.ItemPortBlock;
+import com.heaper.causality.core.material.Material;
+import com.heaper.causality.core.material.MaterialRegistry;
 import com.heaper.causality.menu.ItemPortMenu;
-import com.heaper.causality.port.DirectionGuard;
-import com.heaper.causality.port.ItemPort;
-import com.heaper.causality.port.PortDirection;
-import com.heaper.causality.port.SlottedItemStorage;
+import com.heaper.causality.port.*;
 import com.heaper.causality.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,77 +17,80 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public class ItemPortBE extends BlockEntity implements ItemPort, MenuProvider {
+public class ItemPortBE extends MachinePortBE {
 
-    private static final int DATA_VERSION = 1;
-    private static final int SLOTS = 4;
-    private static final int SLOT_CAPACITY = 64;
-
-    private final PortDirection direction;
+    private final PortSize size;
     private final SlottedItemStorage storage;
-    private final DirectionGuard exposed;
+    private final ItemDirectionGuard exposed;
 
-    private @Nullable BlockPos controllerPos;
-
-    public ItemPortBE(BlockPos pos, BlockState state, PortDirection direction) {
-        super(ModBlockEntities.ITEM_PORT.get(), pos, state);
-        this.direction = direction;
-        this.storage = new SlottedItemStorage(SLOTS, SLOT_CAPACITY, this::setChanged);
-        this.exposed = new DirectionGuard(storage, direction);
+    public ItemPortBE(BlockPos pos, BlockState state, PortDirection direction, PortSize size) {
+        super(ModBlockEntities.ITEM_PORT.get(), pos, state, direction, PortType.ITEM);
+        this.size = size;
+        this.storage = new SlottedItemStorage(size.slots(), 64, this::setChanged);
+        this.exposed = new ItemDirectionGuard(storage, direction);
     }
 
-    @Override
-    public PortDirection portDirection() {
-        return direction;
-    }
-
-    @Override
-    public DirectionGuard exposed() {
-        return exposed;
-    }
-
-    @Override
     public SlottedItemStorage storage() {
         return storage;
     }
 
     @Override
-    public @Nullable BlockPos controllerPos() {
-        return controllerPos;
+    public boolean isEmpty() {
+        return storage.isEmpty();
     }
 
-    @Override
-    public void setControllerPos(@Nullable BlockPos controllerPos) {
-        this.controllerPos = controllerPos;
-        setChanged();
+    public void pushTick() {
+        if (level == null || storage.isEmpty()) return;
+        if (level.getGameTime() % PUSH_INTERVAL != 0) return;
+
+        Direction facing = getBlockState().getValue(ItemPortBlock.FACING);
+        BlockPos target = worldPosition.relative(facing);
+
+        ResourceHandler<ItemResource> destination = level.getCapability(
+                Capabilities.Item.BLOCK, target, facing.getOpposite());
+        if (destination == null) return;
+
+        try (Transaction transaction = Transaction.openRoot()) {
+            boolean moved = false;
+
+            for (int slot = 0; slot < storage.size(); slot++) {
+                int amount = storage.getAmountAsInt(slot);
+                if (amount == 0) continue;
+
+                ItemResource resource = storage.getResource(slot);
+                int inserted = destination.insert(resource, amount, transaction);
+                if (inserted <= 0) continue;
+
+                storage.extract(slot, resource, inserted, transaction);
+                moved = true;
+            }
+
+            if (moved) transaction.commit();
+        }
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        output.putInt("DataVersion", DATA_VERSION);
-
-        if (controllerPos != null)
-            output.putLong("Controller", controllerPos.asLong());
-
-        output.store("Items", SlottedItemStorage.SlotEntry.CODEC.listOf(), storage.toEntries());
+        output.store("Items", SlottedItemStorage.SlotEntry.CODEC.listOf(),
+                storage.toEntries());
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        long owner = input.getLongOr("Controller", Long.MIN_VALUE);
-        controllerPos = owner == Long.MIN_VALUE ? null : BlockPos.of(owner);
-
         input.read("Items", SlottedItemStorage.SlotEntry.CODEC.listOf()).ifPresent(storage::loadEntries);
     }
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block." + ProjectCausality.MODID + "."
-        + (direction == PortDirection.INPUT ? "item_input_port" : "item_output_port"));
+        return getBlockState().getBlock().getName();
     }
 
     @Override

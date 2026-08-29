@@ -7,12 +7,14 @@ import com.heaper.causality.core.material.MaterialStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class VanillaOverlap {
 
+    private static final Map<Item, MaterialStack> BY_ITEM = new HashMap<>();
     private static final Map<MaterialStack, Item> OVERLAPS = new LinkedHashMap<>();
 
     static {
@@ -22,12 +24,19 @@ public class VanillaOverlap {
 
         put(Elements.IRON, MaterialForm.NUGGET, Items.IRON_NUGGET);
         put(Elements.GOLD, MaterialForm.NUGGET, Items.GOLD_NUGGET);
+        put(Elements.COPPER, MaterialForm.NUGGET, Items.COPPER_NUGGET);
     }
 
     private VanillaOverlap() {}
 
     private static void put(Material material, MaterialForm form, Item vanilla) {
-        OVERLAPS.put(new MaterialStack(material, form), vanilla);
+        MaterialStack stack = new MaterialStack(material, form);
+        OVERLAPS.put(stack, vanilla);
+        BY_ITEM.put(vanilla, stack);
+    }
+
+    public static Optional<MaterialStack> materialOf(Item item) {
+        return Optional.ofNullable(BY_ITEM.get(item));
     }
 
     public static boolean isProvidedByVanilla(Material material, MaterialForm form) {

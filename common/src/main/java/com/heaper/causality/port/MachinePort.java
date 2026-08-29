@@ -5,6 +5,8 @@ import org.jspecify.annotations.Nullable;
 
 public interface MachinePort {
 
+    PortType portType();
+
     PortDirection portDirection();
 
     @Nullable BlockPos controllerPos();

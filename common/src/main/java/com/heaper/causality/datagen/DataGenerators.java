@@ -17,8 +17,8 @@ public final class DataGenerators {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
 
-        generator.addProvider(true, new MaterialLangProvider (output));
-        generator.addProvider(true, new MaterialModelProvider(output));
+        generator.addProvider(true, new ModLangProvider(output));
+        generator.addProvider(true, new ModModelProvider(output));
         generator.addProvider(true, new MachineRecipeProvider(output));
     }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "project_causality:block/machine_face",
+  "textures": {
+    "casing": "project_causality:block/metallic/casing",
+    "front": "project_causality:block/port/huge_input"
+  }
+}

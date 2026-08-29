@@ -11,15 +11,15 @@
   "outputs": [
     {
       "type": "material",
-      "chance": 0.2,
-      "form": "dust",
-      "material": "magnetite"
-    },
-    {
-      "type": "material",
       "chance": 0.51,
       "form": "dust",
       "material": "rutile"
+    },
+    {
+      "type": "material",
+      "chance": 0.2,
+      "form": "dust",
+      "material": "magnetite"
     },
     {
       "type": "material",

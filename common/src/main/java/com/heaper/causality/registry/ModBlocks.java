@@ -2,7 +2,7 @@ package com.heaper.causality.registry;
 
 import com.heaper.causality.ProjectCausality;
 import com.heaper.causality.block.ItemPortBlock;
-import com.heaper.causality.block.CrusherControllerBlock;
+import com.heaper.causality.block.MultiblockControllerBlock;
 import com.heaper.causality.component.ComponentType;
 import com.heaper.causality.component.ComponentTypes;
 import com.heaper.causality.core.material.Material;
@@ -35,46 +35,23 @@ public final class ModBlocks {
 
     public record ComponentKey(ComponentType type, Material material) {}
 
-    public static final DeferredBlock<CrusherControllerBlock> CRUSHER_CONTROLLER =
-            BLOCKS.registerBlock(
-                    "crusher_controller",
-                    props -> new CrusherControllerBlock(Multiblocks.TEST_3X3, props),
-                    () -> BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.METAL)
-                            .strength(5.0f, 6.0f)
-                            .sound(SoundType.METAL)
-                            .requiresCorrectToolForDrops());
-
-    public static final DeferredItem<BlockItem> CRUSHER_CONTROLLER_ITEM =
-            ModItems.ITEMS.registerSimpleBlockItem("crusher_controller", CRUSHER_CONTROLLER);
-
-    public static final DeferredBlock<ItemPortBlock> ITEM_INPUT_PORT =
-            BLOCKS.registerBlock(
-                    "item_input_port",
-                    props -> new ItemPortBlock(PortDirection.INPUT, props),
-                    ModBlocks::portProperties
-            );
-
-    public static final DeferredItem<BlockItem> ITEM_INPUT_PORT_ITEM =
-            ModItems.ITEMS.registerSimpleBlockItem("item_input_port", ITEM_INPUT_PORT);
-
-    public static final DeferredBlock<ItemPortBlock> ITEM_OUTPUT_PORT =
-            BLOCKS.registerBlock(
-                    "item_output_port",
-                    props -> new ItemPortBlock(PortDirection.OUTPUT, props),
-                    ModBlocks::portProperties
-            );
-
-    public static final DeferredItem<BlockItem> ITEM_OUTPUT_PORT_ITEM =
-            ModItems.ITEMS.registerSimpleBlockItem("item_output_port", ITEM_OUTPUT_PORT);
-
     private ModBlocks() {}
 
     public static void register(IEventBus modEventBus) {
         if (!MaterialRegistry.isFrozen())
             throw new IllegalStateException("Materials.init() must be run before ModBlocks.register()");
 
+        components();
+
+        ModPorts.registerAll();
+        ModMultiblocks.registerAll();
+
+        BLOCKS.register(modEventBus);
+    }
+
+    private static void components() {
         int count = 0;
+
         for (ComponentType type : ComponentTypes.ALL) {
             for (Material material : MaterialRegistry.all()) {
                 if (!type.eligible(material)) continue;
@@ -87,7 +64,8 @@ public final class ModBlocks {
                         props -> type.create(material, props),
                         () -> type.propertiesFor(material));
 
-                DeferredItem<BlockItem> item = ModItems.ITEMS.registerSimpleBlockItem(name, block);
+                DeferredItem<BlockItem> item =
+                        ModItems.ITEMS.registerSimpleBlockItem(name, block);
 
                 COMPONENTS.put(key, block);
                 COMPONENT_ITEMS.put(key, item);
@@ -96,7 +74,6 @@ public final class ModBlocks {
         }
 
         ProjectCausality.LOGGER.info("Registered {} component blocks", count);
-        BLOCKS.register(modEventBus);
     }
 
     public static Optional<DeferredBlock<Block>> get(ComponentType type, Material material) {
@@ -109,13 +86,5 @@ public final class ModBlocks {
 
     public static Map<ComponentKey, DeferredItem<? extends Item>> allItems() {
         return Collections.unmodifiableMap(COMPONENT_ITEMS);
-    }
-
-    private static BlockBehaviour.Properties portProperties() {
-        return BlockBehaviour.Properties.of()
-                .mapColor(MapColor.METAL)
-                .strength(4.0f, 6.0f)
-                .sound(SoundType.METAL)
-                .requiresCorrectToolForDrops();
     }
 }
