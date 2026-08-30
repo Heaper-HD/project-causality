@@ -11,6 +11,12 @@
   "outputs": [
     {
       "type": "material",
+      "chance": 0.31,
+      "form": "dust",
+      "material": "alumina"
+    },
+    {
+      "type": "material",
       "chance": 0.71,
       "form": "dust",
       "material": "hematite"
@@ -20,12 +26,6 @@
       "chance": 0.37,
       "form": "dust",
       "material": "silica"
-    },
-    {
-      "type": "material",
-      "chance": 0.31,
-      "form": "dust",
-      "material": "alumina"
     }
   ],
   "process": "macerator",

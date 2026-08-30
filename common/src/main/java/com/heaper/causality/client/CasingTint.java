@@ -1,5 +1,6 @@
 package com.heaper.causality.client;
 
+import com.heaper.causality.ProjectCausality;
 import com.heaper.causality.block.entity.ItemPortBE;
 import com.heaper.causality.block.entity.MultiblockControllerBE;
 import com.heaper.causality.client.appearance.AppearanceRegistry;

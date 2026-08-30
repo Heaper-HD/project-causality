@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "project_causality:block/osmium_casing"
+    "model": "project_causality:block/osmium_casing",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8546616
+      }
+    ]
   }
 }

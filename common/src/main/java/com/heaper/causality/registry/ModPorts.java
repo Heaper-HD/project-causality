@@ -104,6 +104,11 @@ public final class ModPorts {
         return Collections.unmodifiableMap(ITEM_PORTS);
     }
 
+    public static Map<FluidKey, DeferredBlock<FluidPortBlock>> allFluid() {
+        return Collections.unmodifiableMap(FLUID_PORTS);
+    }
+
+
     public static Map<ItemKey, DeferredItem<BlockItem>> allItems() {
         return Collections.unmodifiableMap(ITEM_PORT_ITEMS);
     }

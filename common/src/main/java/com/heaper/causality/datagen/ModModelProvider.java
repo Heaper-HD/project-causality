@@ -1,10 +1,13 @@
 package com.heaper.causality.datagen;
 
 import com.heaper.causality.ProjectCausality;
+import com.heaper.causality.block.FluidPortBlock;
 import com.heaper.causality.block.ItemPortBlock;
 import com.heaper.causality.block.MultiblockControllerBlock;
 import com.heaper.causality.client.appearance.Appearance;
 import com.heaper.causality.client.appearance.AppearanceRegistry;
+import com.heaper.causality.client.appearance.Layer;
+import com.heaper.causality.client.appearance.LayerTint;
 import com.heaper.causality.core.material.MaterialStack;
 import com.heaper.causality.material.MaterialItem;
 import com.heaper.causality.multiblock.MultiblockDefinition;
@@ -13,12 +16,14 @@ import com.heaper.causality.registry.ModItems;
 import com.heaper.causality.registry.ModMultiblocks;
 import com.heaper.causality.registry.ModPorts;
 import net.minecraft.client.color.item.Constant;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
@@ -26,8 +31,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class ModModelProvider extends ModelProvider {
 
@@ -41,30 +45,37 @@ public class ModModelProvider extends ModelProvider {
         componentBlocks(blockModels);
         controllers(blockModels);
         ports(blockModels);
+        fluidPorts(blockModels);
     }
 
     private void materialItems(ItemModelGenerators itemModels) {
         for (Map.Entry<MaterialStack, DeferredItem<MaterialItem>> entry : ModItems.all().entrySet()) {
             MaterialStack stack = entry.getKey();
             MaterialItem item = entry.getValue().get();
-            Appearance appearance = AppearanceRegistry.get(stack.material());
 
-            Identifier texture = Identifier.fromNamespaceAndPath(
-                    ProjectCausality.MODID,
-                    "item/" + appearance.texturePath(stack.form()));
-
+            List<Layer> layers = AppearanceRegistry.get(stack.material()).layers(stack.form());
             Identifier model = ModelLocationUtils.getModelLocation(item);
 
-            ModelTemplates.FLAT_ITEM.create(
-                    model,
-                    TextureMapping.layer0(new Material(texture)),
-                    itemModels.modelOutput);
+            TextureMapping mapping = new TextureMapping();
+            for (int i = 0; i < layers.size(); i++) {
+                mapping.put(ModModelTemplates.layerSlot(i),
+                        material("item/" + layers.get(i).texture()));
+            }
 
-            if (appearance.isExclusive(stack.form()))
+            ModModelTemplates.layeredItem(layers.size())
+                    .create(model, mapping, itemModels.modelOutput);
+
+            if (layers.size() == 1 && layers.getFirst().tint() instanceof LayerTint.None) {
                 itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(model));
-            else
-                itemModels.itemModelOutput.accept(item,
-                        ItemModelUtils.tintedModel(model, new Constant(appearance.color())));
+                continue;
+            }
+
+            ItemTintSource[] tints = new ItemTintSource[layers.size()];
+            for (int i = 0; i < layers.size(); i++) {
+                tints[i] = new Constant(layers.get(i).tint().resolve(stack.material()));
+            }
+
+            itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(model, tints));
         }
     }
 
@@ -74,7 +85,8 @@ public class ModModelProvider extends ModelProvider {
             Appearance appearance = AppearanceRegistry.get(key.material());
 
             cube(blockModels, entry.getValue().get(),
-                    "block/" + appearance.set().folder() + "/" + key.type().id());
+                    "block/" + appearance.set().folder() + "/" + key.type().id(),
+                    appearance.color());
         }
     }
 
@@ -95,6 +107,24 @@ public class ModModelProvider extends ModelProvider {
 
             Identifier model = machineFace(blockModels, block,
                     "block/port/" + key.size().prefix() + "_"
+                            + key.direction().name().toLowerCase(Locale.ROOT),
+                    "");
+
+            blockModels.blockStateOutput.accept(
+                    MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model))
+                            .with(BlockModelGenerators.ROTATION_FACING));
+
+            blockModels.registerSimpleItemModel(block, model);
+        }
+    }
+
+    private void fluidPorts(BlockModelGenerators blockModels) {
+        for (Map.Entry<ModPorts.FluidKey, DeferredBlock<FluidPortBlock>> entry : ModPorts.allFluid().entrySet()) {
+            ModPorts.FluidKey key = entry.getKey();
+            Block block = entry.getValue().get();
+
+            Identifier model = machineFace(blockModels, block,
+                    "block/port/fluid_" + key.spec().tier().prefix() + "_"
                             + key.direction().name().toLowerCase(Locale.ROOT),
                     "");
 
@@ -127,16 +157,18 @@ public class ModModelProvider extends ModelProvider {
         }
     }
 
-    private void cube(BlockModelGenerators blockModels, Block block, String texturePath) {
+    private void cube(BlockModelGenerators blockModels, Block block, String texturePath, int color) {
         Identifier texture =
                 Identifier.fromNamespaceAndPath(ProjectCausality.MODID, texturePath);
 
-        Identifier model = ModelTemplates.CUBE_ALL.create(
+        Identifier model = ModModelTemplates.TINTED_CUBE_ALL.create(
                 block, TextureMapping.cube(new Material(texture)), blockModels.modelOutput);
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
                 block, BlockModelGenerators.plainVariant(model)));
-        blockModels.registerSimpleItemModel(block, model);
+
+        blockModels.itemModelOutput.accept(
+                block.asItem(), ItemModelUtils.tintedModel(model, new Constant(color)));
     }
 
     private void orientable(BlockModelGenerators blockModels, Block block, String frontPath, String sidePath, boolean horizontalOnly) {

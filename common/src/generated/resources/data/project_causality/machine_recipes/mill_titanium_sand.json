@@ -11,9 +11,9 @@
   "outputs": [
     {
       "type": "material",
-      "chance": 0.51,
+      "chance": 0.85,
       "form": "dust",
-      "material": "rutile"
+      "material": "silica"
     },
     {
       "type": "material",
@@ -23,9 +23,9 @@
     },
     {
       "type": "material",
-      "chance": 0.85,
+      "chance": 0.51,
       "form": "dust",
-      "material": "silica"
+      "material": "rutile"
     }
   ],
   "process": "macerator",

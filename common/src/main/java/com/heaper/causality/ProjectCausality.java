@@ -1,6 +1,7 @@
 package com.heaper.causality;
 
 import com.heaper.causality.client.ClientSetup;
+import com.heaper.causality.client.ComponentTint;
 import com.heaper.causality.client.MaterialTooltipHandler;
 import com.heaper.causality.client.appearance.AppearanceRegistry;
 import com.heaper.causality.core.material.Materials;
@@ -8,8 +9,12 @@ import com.heaper.causality.datagen.DataGenerators;
 import com.heaper.causality.event.StructureEvents;
 import com.heaper.causality.multiblock.Multiblocks;
 import com.heaper.causality.registry.*;
+import net.minecraft.client.color.block.BlockTintSource;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
