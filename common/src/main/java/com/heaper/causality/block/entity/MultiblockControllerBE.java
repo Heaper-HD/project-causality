@@ -1,5 +1,6 @@
 package com.heaper.causality.block.entity;
 
+import com.heaper.causality.ProjectCausality;
 import com.heaper.causality.block.MultiblockControllerBlock;
 import com.heaper.causality.core.material.Material;
 import com.heaper.causality.core.material.MaterialRegistry;
@@ -17,9 +18,15 @@ import com.heaper.causality.recipe.MachineProcessor;
 import com.heaper.causality.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -104,14 +111,17 @@ public class MultiblockControllerBE extends BlockEntity {
         inputPorts = success.inputPorts();
         outputPorts = success.outputPorts();
 
-        claimPorts(worldPosition);
-
         formed = true;
         materials = success.materialCounts();
         spec = SpecCalculator.fromCasings(materials);
 
+        claimPorts(worldPosition);
+
         StructureIndex.register(level, worldPosition, structurePositions);
         setChanged();
+
+        if (level != null)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     private void claimPorts(BlockPos owner) {
@@ -142,6 +152,9 @@ public class MultiblockControllerBE extends BlockEntity {
         if (level != null) StructureIndex.unregister(level, worldPosition);
         structurePositions = List.of();
         setChanged();
+
+        if (level != null)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     public boolean revalidate() {
@@ -229,6 +242,10 @@ public class MultiblockControllerBE extends BlockEntity {
         activeRecipeId = input.getStringOr("Recipe", "").isEmpty()
                 ? null : input.getStringOr("Recipe", "");
         progress = input.getIntOr("Progress", 0);
+
+        if (level != null && level.isClientSide())
+            level.setBlocksDirty(worldPosition,
+                    Blocks.AIR.defaultBlockState(), getBlockState());
     }
 
     public void serverTick() {
@@ -269,5 +286,15 @@ public class MultiblockControllerBE extends BlockEntity {
             progress = 0;
         }
         setChanged();
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveCustomOnly(registries);
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }

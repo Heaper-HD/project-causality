@@ -1,5 +1,6 @@
 package com.heaper.causality.block.entity;
 
+import com.heaper.causality.ProjectCausality;
 import com.heaper.causality.core.material.Material;
 import com.heaper.causality.core.material.MaterialRegistry;
 import com.heaper.causality.port.MachinePort;
@@ -7,7 +8,16 @@ import com.heaper.causality.port.PortDirection;
 import com.heaper.causality.port.PortSettings;
 import com.heaper.causality.port.PortType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,10 +69,13 @@ public abstract class MachinePortBE extends BlockEntity implements MachinePort, 
     }
 
     public void setFormedMaterial(@Nullable Material formedMaterial) {
+        if (this.formedMaterial == formedMaterial) return;
         this.formedMaterial = formedMaterial;
         setChanged();
-        if (level != null)
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        if (level != null) {
+            BlockState state = getBlockState();
+            level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_ALL);
+        }
     }
 
     public PortSettings settings() {
@@ -103,5 +116,19 @@ public abstract class MachinePortBE extends BlockEntity implements MachinePort, 
                 input.getIntOr("StackLimit", 0),
                 input.getBooleanOr("AutoOutput", true),
                 input.getBooleanOr("AutoInput", false));
+
+        if (level != null && level.isClientSide())
+            level.setBlocksDirty(worldPosition,
+                    Blocks.AIR.defaultBlockState(), getBlockState());
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveCustomOnly(registries);
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }
