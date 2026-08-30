@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:block/standard_x4_fluid_output_port"
+  }
+}

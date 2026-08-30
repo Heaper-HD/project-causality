@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "project_causality:block/iridium_casing"
+    "model": "project_causality:block/iridium_casing",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1644816
+      }
+    ]
   }
 }

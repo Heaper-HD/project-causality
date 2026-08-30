@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "project_causality:block/standard_x2_fluid_output_port",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "project_causality:block/standard_x2_fluid_output_port",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "project_causality:block/standard_x2_fluid_output_port"
+    },
+    "facing=south": {
+      "model": "project_causality:block/standard_x2_fluid_output_port",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "project_causality:block/standard_x2_fluid_output_port",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "project_causality:block/standard_x2_fluid_output_port",
+      "y": 270
+    }
+  }
+}

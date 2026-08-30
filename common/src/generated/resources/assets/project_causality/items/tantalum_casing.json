@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "project_causality:block/tantalum_casing"
+    "model": "project_causality:block/tantalum_casing",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4934456
+      }
+    ]
   }
 }
