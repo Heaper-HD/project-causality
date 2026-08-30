@@ -49,7 +49,7 @@ public class ModBlockEntities {
                         throw new IllegalStateException(
                                 "port BE on non-port block: " + state);
                     },
-                    ModPorts.blocks()));
+                    ModPorts.fluidBlocks()));
 
     private ModBlockEntities() {}
 

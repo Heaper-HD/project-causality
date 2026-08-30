@@ -113,4 +113,10 @@ public final class ModPorts {
                 .map(DeferredBlock::get)
                 .collect(Collectors.toUnmodifiableSet());
     }
+
+    public static Set<Block> fluidBlocks() {
+        return FLUID_PORTS.values().stream()
+                .map(DeferredBlock::get)
+                .collect(Collectors.toSet());
+    }
 }
