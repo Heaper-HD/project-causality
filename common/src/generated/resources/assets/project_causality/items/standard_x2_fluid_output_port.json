@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "project_causality:block/standard_x2_fluid_output_port"
+    "model": "project_causality:block/standard_x2_fluid_output_port_metallic"
   }
 }

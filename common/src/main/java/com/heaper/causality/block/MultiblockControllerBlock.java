@@ -1,6 +1,7 @@
 package com.heaper.causality.block;
 
 import com.heaper.causality.block.entity.MultiblockControllerBE;
+import com.heaper.causality.client.appearance.TextureSet;
 import com.heaper.causality.multiblock.MultiblockDefinition;
 import com.heaper.causality.registry.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
@@ -32,14 +34,18 @@ public class MultiblockControllerBlock extends Block implements EntityBlock {
 
     private final MultiblockDefinition definition;
 
-    public static final BooleanProperty ACTIVE = BlockStateProperties.LIT;
+    public static final EnumProperty<MachineState> STATE =
+            EnumProperty.create("state", MachineState.class);
+    public static final EnumProperty<TextureSet> APPEARANCE =
+            EnumProperty.create("appearance", TextureSet.class);
 
     public MultiblockControllerBlock(MultiblockDefinition definition, Properties properties) {
         super(properties);
         this.definition = definition;
         registerDefaultState(getStateDefinition().any()
                 .setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH)
-                .setValue(ACTIVE, false));
+                .setValue(STATE, MachineState.OFF)
+                .setValue(APPEARANCE, TextureSet.METALLIC));
     }
 
     public MultiblockDefinition definition() { return definition; }
@@ -51,7 +57,7 @@ public class MultiblockControllerBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HorizontalDirectionalBlock.FACING, ACTIVE);
+        builder.add(HorizontalDirectionalBlock.FACING, STATE, APPEARANCE);
     }
 
     @Override
@@ -59,7 +65,7 @@ public class MultiblockControllerBlock extends Block implements EntityBlock {
         return defaultBlockState().setValue(
                 HorizontalDirectionalBlock.FACING,
                         context.getHorizontalDirection().getOpposite())
-                .setValue(ACTIVE, false);
+                .setValue(STATE, MachineState.OFF);
     }
 
     @Override

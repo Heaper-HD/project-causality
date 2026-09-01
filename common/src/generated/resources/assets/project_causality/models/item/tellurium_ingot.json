@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "project_causality:item/rough/ingot"
+    "layer0": "project_causality:item/crystalline/ingot"
   }
 }

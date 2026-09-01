@@ -10,6 +10,7 @@ public final class Materials {
         if (initialized) return;
 
         Elements.init();
+        Alloys.init();
         Compounds.init();
         Minerals.init();
 

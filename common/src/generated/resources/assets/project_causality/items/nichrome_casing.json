@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:block/nichrome_casing",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -6645112
+      }
+    ]
+  }
+}

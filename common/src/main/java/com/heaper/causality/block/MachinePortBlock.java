@@ -1,6 +1,7 @@
 package com.heaper.causality.block;
 
 import com.heaper.causality.block.entity.MachinePortBE;
+import com.heaper.causality.client.appearance.TextureSet;
 import com.heaper.causality.port.PortDirection;
 import com.heaper.causality.port.PortType;
 import net.minecraft.core.BlockPos;
@@ -21,6 +22,8 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -29,6 +32,8 @@ import org.jspecify.annotations.Nullable;
 public abstract class MachinePortBlock extends Block implements EntityBlock {
 
     public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<TextureSet> APPEARANCE =
+            EnumProperty.create("appearance", TextureSet.class);
 
     private final PortDirection direction;
     private final PortType type;
@@ -37,7 +42,9 @@ public abstract class MachinePortBlock extends Block implements EntityBlock {
         super(properties);
         this.direction = direction;
         this.type = type;
-        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH));
+        registerDefaultState(getStateDefinition().any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(APPEARANCE, TextureSet.METALLIC));
     }
 
     public PortDirection direction() { return direction; }
@@ -45,7 +52,7 @@ public abstract class MachinePortBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, APPEARANCE);
     }
 
     @Override

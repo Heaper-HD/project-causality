@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "project_causality:item/rough/crystal"
+    "layer0": "project_causality:item/habit/tabular/crystal"
   }
 }

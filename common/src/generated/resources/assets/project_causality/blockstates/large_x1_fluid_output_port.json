@@ -1,26 +1,118 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "project_causality:block/large_x1_fluid_output_port",
+    "appearance=cast,facing=down": {
+      "model": "project_causality:block/large_x1_fluid_output_port_cast",
       "x": 90
     },
-    "facing=east": {
-      "model": "project_causality:block/large_x1_fluid_output_port",
+    "appearance=cast,facing=east": {
+      "model": "project_causality:block/large_x1_fluid_output_port_cast",
       "y": 90
     },
-    "facing=north": {
-      "model": "project_causality:block/large_x1_fluid_output_port"
+    "appearance=cast,facing=north": {
+      "model": "project_causality:block/large_x1_fluid_output_port_cast"
     },
-    "facing=south": {
-      "model": "project_causality:block/large_x1_fluid_output_port",
+    "appearance=cast,facing=south": {
+      "model": "project_causality:block/large_x1_fluid_output_port_cast",
       "y": 180
     },
-    "facing=up": {
-      "model": "project_causality:block/large_x1_fluid_output_port",
+    "appearance=cast,facing=up": {
+      "model": "project_causality:block/large_x1_fluid_output_port_cast",
       "x": 270
     },
-    "facing=west": {
-      "model": "project_causality:block/large_x1_fluid_output_port",
+    "appearance=cast,facing=west": {
+      "model": "project_causality:block/large_x1_fluid_output_port_cast",
+      "y": 270
+    },
+    "appearance=crystalline,facing=down": {
+      "model": "project_causality:block/large_x1_fluid_output_port_crystalline",
+      "x": 90
+    },
+    "appearance=crystalline,facing=east": {
+      "model": "project_causality:block/large_x1_fluid_output_port_crystalline",
+      "y": 90
+    },
+    "appearance=crystalline,facing=north": {
+      "model": "project_causality:block/large_x1_fluid_output_port_crystalline"
+    },
+    "appearance=crystalline,facing=south": {
+      "model": "project_causality:block/large_x1_fluid_output_port_crystalline",
+      "y": 180
+    },
+    "appearance=crystalline,facing=up": {
+      "model": "project_causality:block/large_x1_fluid_output_port_crystalline",
+      "x": 270
+    },
+    "appearance=crystalline,facing=west": {
+      "model": "project_causality:block/large_x1_fluid_output_port_crystalline",
+      "y": 270
+    },
+    "appearance=metallic,facing=down": {
+      "model": "project_causality:block/large_x1_fluid_output_port_metallic",
+      "x": 90
+    },
+    "appearance=metallic,facing=east": {
+      "model": "project_causality:block/large_x1_fluid_output_port_metallic",
+      "y": 90
+    },
+    "appearance=metallic,facing=north": {
+      "model": "project_causality:block/large_x1_fluid_output_port_metallic"
+    },
+    "appearance=metallic,facing=south": {
+      "model": "project_causality:block/large_x1_fluid_output_port_metallic",
+      "y": 180
+    },
+    "appearance=metallic,facing=up": {
+      "model": "project_causality:block/large_x1_fluid_output_port_metallic",
+      "x": 270
+    },
+    "appearance=metallic,facing=west": {
+      "model": "project_causality:block/large_x1_fluid_output_port_metallic",
+      "y": 270
+    },
+    "appearance=rough,facing=down": {
+      "model": "project_causality:block/large_x1_fluid_output_port_rough",
+      "x": 90
+    },
+    "appearance=rough,facing=east": {
+      "model": "project_causality:block/large_x1_fluid_output_port_rough",
+      "y": 90
+    },
+    "appearance=rough,facing=north": {
+      "model": "project_causality:block/large_x1_fluid_output_port_rough"
+    },
+    "appearance=rough,facing=south": {
+      "model": "project_causality:block/large_x1_fluid_output_port_rough",
+      "y": 180
+    },
+    "appearance=rough,facing=up": {
+      "model": "project_causality:block/large_x1_fluid_output_port_rough",
+      "x": 270
+    },
+    "appearance=rough,facing=west": {
+      "model": "project_causality:block/large_x1_fluid_output_port_rough",
+      "y": 270
+    },
+    "appearance=shiny,facing=down": {
+      "model": "project_causality:block/large_x1_fluid_output_port_shiny",
+      "x": 90
+    },
+    "appearance=shiny,facing=east": {
+      "model": "project_causality:block/large_x1_fluid_output_port_shiny",
+      "y": 90
+    },
+    "appearance=shiny,facing=north": {
+      "model": "project_causality:block/large_x1_fluid_output_port_shiny"
+    },
+    "appearance=shiny,facing=south": {
+      "model": "project_causality:block/large_x1_fluid_output_port_shiny",
+      "y": 180
+    },
+    "appearance=shiny,facing=up": {
+      "model": "project_causality:block/large_x1_fluid_output_port_shiny",
+      "x": 270
+    },
+    "appearance=shiny,facing=west": {
+      "model": "project_causality:block/large_x1_fluid_output_port_shiny",
       "y": 270
     }
   }

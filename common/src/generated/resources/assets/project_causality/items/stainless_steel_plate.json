@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/stainless_steel_plate",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3880756
+      }
+    ]
+  }
+}

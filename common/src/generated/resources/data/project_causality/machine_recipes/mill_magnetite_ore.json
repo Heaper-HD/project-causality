@@ -11,15 +11,15 @@
   "outputs": [
     {
       "type": "material",
-      "chance": 0.85,
-      "form": "dust",
-      "material": "magnetite"
-    },
-    {
-      "type": "material",
       "chance": 0.51,
       "form": "dust",
       "material": "silica"
+    },
+    {
+      "type": "material",
+      "chance": 0.85,
+      "form": "dust",
+      "material": "magnetite"
     }
   ],
   "process": "macerator",

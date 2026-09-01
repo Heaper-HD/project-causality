@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "project_causality:item/metallic/nugget",
+    "layer1": "project_causality:item/overlay/mill_scale/ingot"
+  }
+}

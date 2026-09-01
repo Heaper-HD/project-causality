@@ -1,0 +1,23 @@
+{
+  "duration": 135,
+  "id": "crush_sphalerite_ore",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "sphalerite_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "sphalerite_ore"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 150.0
+  }
+}

@@ -1,33 +1,228 @@
 {
   "variants": {
-    "facing=east,lit=false": {
-      "model": "project_causality:block/crusher_controller",
+    "appearance=cast,facing=east,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_cast",
       "y": 90
     },
-    "facing=east,lit=true": {
-      "model": "project_causality:block/crusher_controller_on",
+    "appearance=cast,facing=east,state=off": {
+      "model": "project_causality:block/crusher_controller_off_cast",
       "y": 90
     },
-    "facing=north,lit=false": {
-      "model": "project_causality:block/crusher_controller"
+    "appearance=cast,facing=east,state=running": {
+      "model": "project_causality:block/crusher_controller_running_cast",
+      "y": 90
     },
-    "facing=north,lit=true": {
-      "model": "project_causality:block/crusher_controller_on"
+    "appearance=cast,facing=north,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_cast"
     },
-    "facing=south,lit=false": {
-      "model": "project_causality:block/crusher_controller",
+    "appearance=cast,facing=north,state=off": {
+      "model": "project_causality:block/crusher_controller_off_cast"
+    },
+    "appearance=cast,facing=north,state=running": {
+      "model": "project_causality:block/crusher_controller_running_cast"
+    },
+    "appearance=cast,facing=south,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_cast",
       "y": 180
     },
-    "facing=south,lit=true": {
-      "model": "project_causality:block/crusher_controller_on",
+    "appearance=cast,facing=south,state=off": {
+      "model": "project_causality:block/crusher_controller_off_cast",
       "y": 180
     },
-    "facing=west,lit=false": {
-      "model": "project_causality:block/crusher_controller",
+    "appearance=cast,facing=south,state=running": {
+      "model": "project_causality:block/crusher_controller_running_cast",
+      "y": 180
+    },
+    "appearance=cast,facing=west,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_cast",
       "y": 270
     },
-    "facing=west,lit=true": {
-      "model": "project_causality:block/crusher_controller_on",
+    "appearance=cast,facing=west,state=off": {
+      "model": "project_causality:block/crusher_controller_off_cast",
+      "y": 270
+    },
+    "appearance=cast,facing=west,state=running": {
+      "model": "project_causality:block/crusher_controller_running_cast",
+      "y": 270
+    },
+    "appearance=crystalline,facing=east,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_crystalline",
+      "y": 90
+    },
+    "appearance=crystalline,facing=east,state=off": {
+      "model": "project_causality:block/crusher_controller_off_crystalline",
+      "y": 90
+    },
+    "appearance=crystalline,facing=east,state=running": {
+      "model": "project_causality:block/crusher_controller_running_crystalline",
+      "y": 90
+    },
+    "appearance=crystalline,facing=north,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_crystalline"
+    },
+    "appearance=crystalline,facing=north,state=off": {
+      "model": "project_causality:block/crusher_controller_off_crystalline"
+    },
+    "appearance=crystalline,facing=north,state=running": {
+      "model": "project_causality:block/crusher_controller_running_crystalline"
+    },
+    "appearance=crystalline,facing=south,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_crystalline",
+      "y": 180
+    },
+    "appearance=crystalline,facing=south,state=off": {
+      "model": "project_causality:block/crusher_controller_off_crystalline",
+      "y": 180
+    },
+    "appearance=crystalline,facing=south,state=running": {
+      "model": "project_causality:block/crusher_controller_running_crystalline",
+      "y": 180
+    },
+    "appearance=crystalline,facing=west,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_crystalline",
+      "y": 270
+    },
+    "appearance=crystalline,facing=west,state=off": {
+      "model": "project_causality:block/crusher_controller_off_crystalline",
+      "y": 270
+    },
+    "appearance=crystalline,facing=west,state=running": {
+      "model": "project_causality:block/crusher_controller_running_crystalline",
+      "y": 270
+    },
+    "appearance=metallic,facing=east,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_metallic",
+      "y": 90
+    },
+    "appearance=metallic,facing=east,state=off": {
+      "model": "project_causality:block/crusher_controller_off_metallic",
+      "y": 90
+    },
+    "appearance=metallic,facing=east,state=running": {
+      "model": "project_causality:block/crusher_controller_running_metallic",
+      "y": 90
+    },
+    "appearance=metallic,facing=north,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_metallic"
+    },
+    "appearance=metallic,facing=north,state=off": {
+      "model": "project_causality:block/crusher_controller_off_metallic"
+    },
+    "appearance=metallic,facing=north,state=running": {
+      "model": "project_causality:block/crusher_controller_running_metallic"
+    },
+    "appearance=metallic,facing=south,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_metallic",
+      "y": 180
+    },
+    "appearance=metallic,facing=south,state=off": {
+      "model": "project_causality:block/crusher_controller_off_metallic",
+      "y": 180
+    },
+    "appearance=metallic,facing=south,state=running": {
+      "model": "project_causality:block/crusher_controller_running_metallic",
+      "y": 180
+    },
+    "appearance=metallic,facing=west,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_metallic",
+      "y": 270
+    },
+    "appearance=metallic,facing=west,state=off": {
+      "model": "project_causality:block/crusher_controller_off_metallic",
+      "y": 270
+    },
+    "appearance=metallic,facing=west,state=running": {
+      "model": "project_causality:block/crusher_controller_running_metallic",
+      "y": 270
+    },
+    "appearance=rough,facing=east,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_rough",
+      "y": 90
+    },
+    "appearance=rough,facing=east,state=off": {
+      "model": "project_causality:block/crusher_controller_off_rough",
+      "y": 90
+    },
+    "appearance=rough,facing=east,state=running": {
+      "model": "project_causality:block/crusher_controller_running_rough",
+      "y": 90
+    },
+    "appearance=rough,facing=north,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_rough"
+    },
+    "appearance=rough,facing=north,state=off": {
+      "model": "project_causality:block/crusher_controller_off_rough"
+    },
+    "appearance=rough,facing=north,state=running": {
+      "model": "project_causality:block/crusher_controller_running_rough"
+    },
+    "appearance=rough,facing=south,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_rough",
+      "y": 180
+    },
+    "appearance=rough,facing=south,state=off": {
+      "model": "project_causality:block/crusher_controller_off_rough",
+      "y": 180
+    },
+    "appearance=rough,facing=south,state=running": {
+      "model": "project_causality:block/crusher_controller_running_rough",
+      "y": 180
+    },
+    "appearance=rough,facing=west,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_rough",
+      "y": 270
+    },
+    "appearance=rough,facing=west,state=off": {
+      "model": "project_causality:block/crusher_controller_off_rough",
+      "y": 270
+    },
+    "appearance=rough,facing=west,state=running": {
+      "model": "project_causality:block/crusher_controller_running_rough",
+      "y": 270
+    },
+    "appearance=shiny,facing=east,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_shiny",
+      "y": 90
+    },
+    "appearance=shiny,facing=east,state=off": {
+      "model": "project_causality:block/crusher_controller_off_shiny",
+      "y": 90
+    },
+    "appearance=shiny,facing=east,state=running": {
+      "model": "project_causality:block/crusher_controller_running_shiny",
+      "y": 90
+    },
+    "appearance=shiny,facing=north,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_shiny"
+    },
+    "appearance=shiny,facing=north,state=off": {
+      "model": "project_causality:block/crusher_controller_off_shiny"
+    },
+    "appearance=shiny,facing=north,state=running": {
+      "model": "project_causality:block/crusher_controller_running_shiny"
+    },
+    "appearance=shiny,facing=south,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_shiny",
+      "y": 180
+    },
+    "appearance=shiny,facing=south,state=off": {
+      "model": "project_causality:block/crusher_controller_off_shiny",
+      "y": 180
+    },
+    "appearance=shiny,facing=south,state=running": {
+      "model": "project_causality:block/crusher_controller_running_shiny",
+      "y": 180
+    },
+    "appearance=shiny,facing=west,state=idle": {
+      "model": "project_causality:block/crusher_controller_idle_shiny",
+      "y": 270
+    },
+    "appearance=shiny,facing=west,state=off": {
+      "model": "project_causality:block/crusher_controller_off_shiny",
+      "y": 270
+    },
+    "appearance=shiny,facing=west,state=running": {
+      "model": "project_causality:block/crusher_controller_running_shiny",
       "y": 270
     }
   }

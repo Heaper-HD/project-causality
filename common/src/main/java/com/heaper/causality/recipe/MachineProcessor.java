@@ -38,16 +38,22 @@ public final class MachineProcessor {
         }
     }
 
-    public static boolean complete(MachineRecipe recipe,
-                                   List<ItemPort> inputs, List<ItemPort> outputs,
-                                   RandomSource random) {
+    public static boolean consume(MachineRecipe recipe,
+                                   List<ItemPort> inputs) {
         try (Transaction transaction = Transaction.openRoot()) {
             if (!consumeInputs(recipe, inputs, transaction)) return false;
-            if (!placeOutputs(recipe, outputs, transaction, random)) return false;
-
             transaction.commit();
             return true;
         }
+    }
+
+    public static boolean deliver(MachineRecipe recipe, List<ItemPort> outputs, RandomSource random) {
+        try (Transaction transaction = Transaction.openRoot()) {
+            if (!placeOutputs(recipe, outputs, transaction, random)) return false;
+            transaction.commit();
+            return true;
+        }
+
     }
 
     private static boolean consumeInputs(MachineRecipe recipe,

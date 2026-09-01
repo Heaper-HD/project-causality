@@ -1,10 +1,13 @@
 package com.heaper.causality.client.appearance;
 
-import com.heaper.causality.core.material.Elements;
-import com.heaper.causality.core.material.Material;
+import com.heaper.causality.core.material.*;
 import com.heaper.causality.core.material.composition.Composition;
+import com.mojang.datafixers.kinds.App;
+import net.minecraft.client.data.models.model.TextureSlot;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.heaper.causality.client.appearance.TextureSet.*;
@@ -24,10 +27,17 @@ public final class AppearanceRegistry {
         APPEARANCES.put(material, new Appearance(set, color));
     }
 
+    public static void set(Material material, TextureSet set,  int color, Decoration... decorations) {
+        APPEARANCES.put(material, new Appearance(set, color, Map.of(), null, null, List.of(decorations)));
+    }
+
     public static Appearance get(Material material) {
         Appearance a = APPEARANCES.get(material);
         if (a != null) return a;
-        return new Appearance(defaultSet(material), defaultColor(material));
+
+        Appearance derived = new Appearance(defaultSet(material), defaultColor(material));
+        APPEARANCES.put(material, derived);
+        return derived;
     }
 
     public static int colorOf(Material material) {
@@ -35,13 +45,32 @@ public final class AppearanceRegistry {
     }
 
     private static TextureSet defaultSet(Material material) {
-        if (!(material.composition() instanceof Composition.Element e)) return ROUGH;
-        return e.category().isMetal() ? METALLIC : ROUGH;
+        return switch (material.composition()) {
+            case Composition.Element e -> e.category().isMetal() ? METALLIC : ROUGH;
+            case Composition.Mixture m -> metallic(m.fractions()) ? METALLIC : ROUGH;
+            case Composition.Compound c -> ROUGH;
+        };
+    }
+
+    private static boolean metallic(Map<Material, Double> fractions) {
+        double metal = fractions.entrySet().stream()
+                .filter(e -> e.getKey().composition() instanceof Composition.Element el
+                && el.category().isMetal())
+                .mapToDouble(Map.Entry::getValue)
+                .sum();
+        return metal >= 0.5;
     }
 
     private static int defaultColor(Material material) {
-        if (!(material.composition() instanceof Composition.Element e)) return FALLBACK.color();
-        return switch (e.category()) {
+        return switch (material.composition()) {
+            case Composition.Element e -> categoryColor(e.category());
+            case Composition.Mixture m -> blend(m.fractions());
+            case Composition.Compound c -> blend(compoundFractions(c));
+        };
+    }
+
+    public static int categoryColor(ElementCategory category) {
+        return switch (category) {
             case ALKALI_METAL -> 0xD8C8A0;
             case ALKALINE_EARTH_METAL -> 0xD0D0B8;
             case TRANSITION_METAL -> 0xC0C0C8;
@@ -56,13 +85,52 @@ public final class AppearanceRegistry {
         };
     }
 
+    private static Map<Material, Double> compoundFractions(Composition.Compound c) {
+        double total = c.parts().stream().mapToInt(Composition.Part::count).sum();
+        Map<Material, Double> out = new LinkedHashMap<>();
+        for (Composition.Part p : c.parts())
+            out.merge(p.material(), p.count() / total, Double::sum);
+        return out;
+    }
+
+    private static int blend(Map<Material, Double> fractions) {
+        if (fractions.isEmpty()) return FALLBACK.color();
+
+        double r = 0, g = 0, b = 0, total = 0;
+
+        for (Map.Entry<Material, Double> entry : fractions.entrySet()) {
+            int c = colorOf(entry.getKey());
+            double weight = entry.getValue() * (0.25 + saturation(c));
+
+            r += ((c >> 16) & 0xFF) * weight;
+            g += ((c >> 8) & 0xFF) * weight;
+            b += (c & 0xFF) * weight;
+            total += weight;
+        }
+
+        if (total <= 0) return FALLBACK.color();
+
+        return (clamp(r / total) << 16) | (clamp(g / total) << 8) | clamp(b / total);
+    }
+
+    private static double saturation(int rbg) {
+        int r = (rbg >> 16) & 0xFF, g = (rbg >> 8) & 0xFF, b = rbg & 0xFF;
+        int max = Math.max(r, Math.max(g, b));
+        int min = Math.min(r, Math.min(g, b));
+        return max == 0 ? 0.0 : (max - min) / (double) max;
+    }
+
+    private static int clamp(double v) {
+        return Math.clamp(Math.round(v), 0, 255);
+    }
+
     public static void bootstrap() {
         // Period 1-2
         set(Elements.HYDROGEN, ROUGH, 0xB4D2E6);
         set(Elements.HELIUM, ROUGH, 0xF0E6A0);
         set(Elements.LITHIUM, METALLIC, 0xD8D8E0);
         set(Elements.BERYLLIUM, METALLIC, 0xB4C8B4);
-        set(Elements.BORON, ROUGH, 0x6E5A50);
+        set(Elements.BORON, CRYSTALLINE, 0x6E5A50);
         set(Elements.CARBON, ROUGH, 0x505050);
         set(Elements.NITROGEN, ROUGH, 0xA0C8E6);
         set(Elements.OXYGEN, ROUGH, 0x9FD4E8);
@@ -73,9 +141,9 @@ public final class AppearanceRegistry {
         set(Elements.SODIUM, METALLIC, 0xE6E6DC);
         set(Elements.MAGNESIUM, METALLIC, 0xC8DCC8);
         set(Elements.ALUMINIUM, METALLIC, 0x80C8F0);
-        set(Elements.SILICON, ROUGH, 0x3C3C50);
+        set(Elements.SILICON, CRYSTALLINE, 0x3C3C50);
         set(Elements.PHOSPHORUS, ROUGH, 0xFFFF00);
-        set(Elements.SULFUR, ROUGH, 0xC8C800);
+        set(Elements.SULFUR, CRYSTALLINE, 0xC8C800);
         set(Elements.CHLORINE, ROUGH, 0xC8E06E);
         set(Elements.ARGON, ROUGH, 0xC8A0E6);
 
@@ -93,8 +161,8 @@ public final class AppearanceRegistry {
         set(Elements.COPPER, METALLIC, 0xE07030);
         set(Elements.ZINC, METALLIC, 0xC8D8D8);
         set(Elements.GALLIUM, METALLIC, 0xC8C8D2);
-        set(Elements.GERMANIUM, METALLIC, 0x8C8C96);
-        set(Elements.ARSENIC, METALLIC, 0x9B9B87);
+        set(Elements.GERMANIUM, CRYSTALLINE, 0x8C8C96);
+        set(Elements.ARSENIC, CRYSTALLINE, 0x9B9B87);
         set(Elements.SELENIUM, METALLIC, 0x8C6E50);
         set(Elements.BROMINE, METALLIC, 0xA02800);
         set(Elements.KRYPTON, METALLIC, 0xA0E6E6);
@@ -114,9 +182,9 @@ public final class AppearanceRegistry {
         set(Elements.CADMIUM,    METALLIC, 0xE6D28C);
         set(Elements.INDIUM,     METALLIC, 0xC8C8DC);
         set(Elements.TIN,        METALLIC, 0xDCDCDC);
-        set(Elements.ANTIMONY,   ROUGH,    0xB4B4C8);
-        set(Elements.TELLURIUM,  ROUGH,    0xC8B48C);
-        set(Elements.IODINE,     ROUGH,    0x50327D);
+        set(Elements.ANTIMONY,   CRYSTALLINE,    0xB4B4C8);
+        set(Elements.TELLURIUM,  CRYSTALLINE,    0xC8B48C);
+        set(Elements.IODINE,     CRYSTALLINE,    0x50327D);
         set(Elements.XENON,      ROUGH,    0xB4C8E6);
 
         // Period 6
@@ -193,5 +261,49 @@ public final class AppearanceRegistry {
         set(Elements.LIVERMORIUM,   METALLIC, 0x8C64BE);
         set(Elements.TENNESSINE,    ROUGH,    0x9664BE);
         set(Elements.OGANESSON,     ROUGH,    0xA064BE);
+
+        // Compounds
+        set(Compounds.HEMATITE, new Appearance(ROUGH, 0x7A2E28).withHabit(Habit.BOTRYOIDAL));
+        set(Compounds.MAGNETITE, new Appearance(ROUGH, 0x33333A).withHabit(Habit.OCTAHEDRAL));
+        set(Compounds.SILICA, new Appearance(CRYSTALLINE, 0xD8D2C4).withHabit(Habit.PRISMATIC));
+        set(Compounds.ALUMINA, new Appearance(ROUGH, 0xE0DAD0).withHabit(Habit.MASSIVE));
+        set(Compounds.CHALCOPYRITE, new Appearance(SHINY, 0xC9A227).withHabit(Habit.TABULAR));
+        set(Compounds.PYRITE, new Appearance(CRYSTALLINE, 0xD4C24A).withHabit(Habit.CUBIC));
+        set(Compounds.CASSITERITE, new Appearance(ROUGH, 0x4A3A2E).withHabit(Habit.PRISMATIC));
+        set(Compounds.RUTILE, new Appearance(ROUGH, 0x8C3A2A).withHabit(Habit.ACICULAR));
+
+        // Minerals
+        set(Minerals.BANDED_IRON, new Appearance(ROUGH, 0x8A4A38)
+                .with(Inclusion.of("banding", Compounds.HEMATITE, "chunk", "grit"))
+                .decorated(Decoration.RUST, Decoration.DUSTY));
+
+        set(Minerals.BROW_IRON, new Appearance(ROUGH, 0x7A5A3A)
+                .with(Inclusion.of("specks", Compounds.HEMATITE, "chunk", "grit"))
+                .decorated(Decoration.RUST, Decoration.EFFLORESCENT));
+
+        set(Minerals.MAGNETITE_ORE, new Appearance(ROUGH, 0x4A4A52)
+                .with(Inclusion.of("studs", Compounds.MAGNETITE, "chunk", "grit"))
+                .decorated(Decoration.DUSTY));
+
+        set(Minerals.COPPER_ORE, new Appearance(ROUGH, 0x6E6A4A)
+                .with(Inclusion.of("flecks", Compounds.CHALCOPYRITE, "chunk", "grit"))
+                .decorated(Decoration.WET));
+
+        set(Minerals.TIN_ORE, new Appearance(ROUGH, 0x8A8270)
+                .with(Inclusion.of("veins", Compounds.CASSITERITE, "chunk", "grit"))
+                .decorated(Decoration.DUSTY));
+
+        set(Minerals.TITANIUM_SAND, new Appearance(ROUGH, 0xA89878)
+                .with(Inclusion.of("specks", Compounds.RUTILE, "chunk", "grit"))
+                .decorated(Decoration.DUSTY));
+
+        set(Alloys.BRONZE, new Appearance(CAST, 0xC08048).decorated(Decoration.PATINA));
+        set(Alloys.BRASS, new Appearance(CAST, 0xD4B85A).decorated(Decoration.TARNISH));
+        set(Alloys.PIG_IRON, new Appearance(CAST, 0x6A5A50).decorated(Decoration.SOOTED));
+        set(Alloys.STEEL, new Appearance(METALLIC, 0x8A8A92).decorated(Decoration.MILL_SCALE));
+        set(Alloys.STAINLESS_STEEL, new Appearance(SHINY, 0xC4C8CC));
+        set(Alloys.CUPRONICKEL, new Appearance(METALLIC, 0xC8A898));
+        set(Alloys.NICHROME, new Appearance(METALLIC, 0x9A9A88));
+        set(Alloys.TITANIUM_ALLOY, new Appearance(METALLIC, 0xB8A8C0));
     }
 }

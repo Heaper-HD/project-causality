@@ -1,13 +1,8 @@
 package com.heaper.causality.datagen;
 
 import com.heaper.causality.ProjectCausality;
-import com.heaper.causality.block.FluidPortBlock;
-import com.heaper.causality.block.ItemPortBlock;
-import com.heaper.causality.block.MultiblockControllerBlock;
-import com.heaper.causality.client.appearance.Appearance;
-import com.heaper.causality.client.appearance.AppearanceRegistry;
-import com.heaper.causality.client.appearance.Layer;
-import com.heaper.causality.client.appearance.LayerTint;
+import com.heaper.causality.block.*;
+import com.heaper.causality.client.appearance.*;
 import com.heaper.causality.core.material.MaterialStack;
 import com.heaper.causality.material.MaterialItem;
 import com.heaper.causality.multiblock.MultiblockDefinition;
@@ -20,6 +15,8 @@ import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.BlockModelDefinitionGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
@@ -90,14 +87,14 @@ public class ModModelProvider extends ModelProvider {
         }
     }
 
-    private Identifier machineFace(BlockModelGenerators blockModels,
-                                   Block block, String frontPath, String suffix) {
+    private Identifier machineFace(BlockModelGenerators blockModels, Block block,
+                                   TextureSet set, String frontPath, String suffix) {
         TextureMapping mapping = new TextureMapping()
-                .put(ModModelTemplates.CASING, material("block/metallic/casing"))
+                .put(ModModelTemplates.CASING, material("block/" + set.folder() + "/casing"))
                 .put(ModModelTemplates.FRONT, material(frontPath));
 
         return ModModelTemplates.MACHINE_FACE.createWithSuffix(
-                block, suffix, mapping, blockModels.modelOutput);
+                block, suffix + "_" + set.folder(), mapping, blockModels.modelOutput);
     }
 
     private void ports(BlockModelGenerators blockModels) {
@@ -105,16 +102,25 @@ public class ModModelProvider extends ModelProvider {
             ModPorts.ItemKey key = entry.getKey();
             Block block = entry.getValue().get();
 
-            Identifier model = machineFace(blockModels, block,
-                    "block/port/" + key.size().prefix() + "_"
-                            + key.direction().name().toLowerCase(Locale.ROOT),
-                    "");
+            String front = "block/port/" + key.size().prefix() + "_"
+                    + key.direction().name().toLowerCase(Locale.ROOT);
+
+            Map<TextureSet, Identifier> models = new EnumMap<>(TextureSet.class);
+            for (TextureSet set : TextureSet.values())
+                models.put(set, machineFace(blockModels, block ,set , front, ""));
+
+            PropertyDispatch.C1<MultiVariant, TextureSet> dispatch =
+                    PropertyDispatch.initial(MachinePortBlock.APPEARANCE);
+
+            for (TextureSet set : TextureSet.values())
+                dispatch = dispatch.select(set, BlockModelGenerators.plainVariant(models.get(set)));
 
             blockModels.blockStateOutput.accept(
-                    MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model))
+                    MultiVariantGenerator.dispatch(block)
+                            .with(dispatch)
                             .with(BlockModelGenerators.ROTATION_FACING));
 
-            blockModels.registerSimpleItemModel(block, model);
+            blockModels.registerSimpleItemModel(block, models.get(TextureSet.METALLIC));
         }
     }
 
@@ -123,16 +129,24 @@ public class ModModelProvider extends ModelProvider {
             ModPorts.FluidKey key = entry.getKey();
             Block block = entry.getValue().get();
 
-            Identifier model = machineFace(blockModels, block,
-                    "block/port/fluid_" + key.spec().tier().prefix() + "_"
-                            + key.direction().name().toLowerCase(Locale.ROOT),
-                    "");
+            String front = "block/port/fluid_" + key.spec().tier().prefix() + "_"
+                    + key.direction().name().toLowerCase(Locale.ROOT);
+
+            Map<TextureSet, Identifier> models = new EnumMap<>(TextureSet.class);
+            for (TextureSet set : TextureSet.values())
+                models.put(set, machineFace(blockModels, block ,set , front, ""));
+
+            PropertyDispatch.C1<MultiVariant, TextureSet> dispatch =
+                    PropertyDispatch.initial(MachinePortBlock.APPEARANCE);
+            for (TextureSet set : TextureSet.values())
+                dispatch = dispatch.select(set, BlockModelGenerators.plainVariant(models.get(set)));
 
             blockModels.blockStateOutput.accept(
-                    MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(model))
+                    MultiVariantGenerator.dispatch(block)
+                            .with(dispatch)
                             .with(BlockModelGenerators.ROTATION_FACING));
 
-            blockModels.registerSimpleItemModel(block, model);
+            blockModels.registerSimpleItemModel(block, models.get(TextureSet.METALLIC));
         }
     }
 
@@ -141,19 +155,41 @@ public class ModModelProvider extends ModelProvider {
             MultiblockDefinition definition = entry.getKey();
             Block block = entry.getValue().get();
 
-            Identifier off = machineFace(blockModels, block,
-                    "block/" + definition.frontTexture(), "");
-            Identifier on = machineFace(blockModels, block,
-                    "block/" + definition.frontTexture() + "_on", "_on");
+            Map<MachineState, Map<TextureSet, Identifier>> models =
+                    new EnumMap<>(MachineState.class);
+
+            Map<TextureSet, Identifier> off = new EnumMap<>(TextureSet.class);
+            Map<TextureSet, Identifier> on = new EnumMap<>(TextureSet.class);
+
+            for (MachineState state : MachineState.values()) {
+                Map<TextureSet, Identifier> perSet = new EnumMap<>(TextureSet.class);
+
+                for (TextureSet set : TextureSet.values()) {
+                    perSet.put(set, machineFace(blockModels, block, set,
+                            "block/" + definition.frontTexture() + "_" + state.getSerializedName(),
+                            "_" + state.getSerializedName()));
+                }
+
+                models.put(state, perSet);
+            }
+
+            PropertyDispatch.C2<MultiVariant, MachineState, TextureSet> dispatch =
+                    PropertyDispatch.initial(
+                            MultiblockControllerBlock.STATE,
+                            MultiblockControllerBlock.APPEARANCE);
+
+            for (MachineState state : MachineState.values())
+                for (TextureSet set : TextureSet.values())
+                    dispatch = dispatch.select(state, set,
+                            BlockModelGenerators.plainVariant(models.get(state).get(set)));
 
             blockModels.blockStateOutput.accept(
                     MultiVariantGenerator.dispatch(block)
-                            .with(PropertyDispatch.initial(MultiblockControllerBlock.ACTIVE)
-                                    .select(false, BlockModelGenerators.plainVariant(off))
-                                    .select(true, BlockModelGenerators.plainVariant(on)))
+                            .with(dispatch)
                             .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
 
-            blockModels.registerSimpleItemModel(block, off);
+            blockModels.registerSimpleItemModel(block,
+                    models.get(MachineState.OFF).get(TextureSet.METALLIC));
         }
     }
 

@@ -1,0 +1,41 @@
+{
+  "duration": 135,
+  "id": "mill_sphalerite_ore",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "crushed",
+      "material": "sphalerite_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 20,
+      "form": "dust",
+      "material": "pyrite"
+    },
+    {
+      "type": "material",
+      "chance": 0.4,
+      "form": "dust",
+      "material": "pyrite"
+    },
+    {
+      "type": "material",
+      "chance": 0.82,
+      "form": "dust",
+      "material": "sphalerite"
+    },
+    {
+      "type": "material",
+      "chance": 0.51,
+      "form": "dust",
+      "material": "silica"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 150.0
+  }
+}

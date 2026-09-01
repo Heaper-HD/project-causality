@@ -57,6 +57,23 @@ public class Minerals {
             .property(MaterialProperty.DENSITY, 4.20)
             .build();
 
+    public static final Material SPHALERITE_ORE = Material.builder("sphalerite_ore")
+            .mixture(Compounds.SPHALERITE, 0.48,
+                    Compounds.PYRITE, 12,
+                    Compounds.SILICA, 0.30)
+            .forms(ORE, RAW, CRUSHED, PURIFIED, DUST)
+            .property(MaterialProperty.HARDNESS, 3.75)
+            .property(MaterialProperty.DENSITY, 4.0)
+            .build();
+
+    public static final Material LIMESTONE_ROCK = Material.builder("limestone_rock")
+            .mixture(Compounds.LIMESTONE, 0.85,
+                    Compounds.SILICA, 0.10)
+            .forms(ORE, RAW, CRUSHED, DUST)
+            .property(MaterialProperty.HARDNESS, 3.0)
+            .property(MaterialProperty.DENSITY, 2.70)
+            .build();
+
     private Minerals() {}
 
     public static void init() {}

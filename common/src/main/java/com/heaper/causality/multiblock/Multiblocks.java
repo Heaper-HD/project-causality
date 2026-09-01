@@ -1,7 +1,5 @@
 package com.heaper.causality.multiblock;
 
-import com.heaper.causality.block.ItemPortBlock;
-import com.heaper.causality.component.ComponentTypes;
 import com.heaper.causality.core.recipe.ProcessType;
 
 public final class Multiblocks {

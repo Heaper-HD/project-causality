@@ -3,6 +3,7 @@ package com.heaper.causality.core.material;
 import com.heaper.causality.core.material.composition.Composition;
 
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Set;
 
 import static com.heaper.causality.core.material.MaterialForm.*;
@@ -10,6 +11,17 @@ import static com.heaper.causality.core.material.MaterialForm.*;
 public final class MaterialForms {
     public static Set<MaterialForm> derive(Material.Builder b) {
         if (b.state() != PhysicalState.SOLID) return EnumSet.of(FLUID);
+        if (b.composition() instanceof Composition.Mixture mix) {
+            double metallic = mix.fractions().entrySet().stream()
+                    .filter(entry -> entry.getKey().composition() instanceof Composition.Element el
+                    && el.category().isMetal())
+                    .mapToDouble(Map.Entry::getValue)
+                    .sum();
+
+            return metallic >= 0.5
+                    ? EnumSet.of(INGOT, PLATE, ROD, DUST, NUGGET, SMALL_DUST, TINY_DUST)
+                    : EnumSet.noneOf(MaterialForm.class);
+        }
         if (!(b.composition() instanceof Composition.Element e))
             return EnumSet.noneOf(MaterialForm.class);
         if (b.occurrence() == Occurrence.SYNTHETIC)

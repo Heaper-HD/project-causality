@@ -16,7 +16,7 @@ public record MaterialProperty<T>(String id, Class<T> type, String unit) {
     public static final MaterialProperty<Double> DENSITY = of("density", Double.class, "g/cm3");
     public static final MaterialProperty<Double> HARDNESS = of("hardness", Double.class, "Mohs");
     public static final MaterialProperty<Integer> TENSILE_STRENGTH = of("tensile_strength", Integer.class, "MPa");
-    public static final MaterialProperty<Double> DUCTILITY = of("tensile_strength", Double.class, "% elongation");
+    public static final MaterialProperty<Double> DUCTILITY = of("ductility", Double.class, "% elongation");
 
     // Electrical & magnetic
     public static final MaterialProperty<Double> RESISTIVITY = of("resistivity", Double.class, "ohm*m");

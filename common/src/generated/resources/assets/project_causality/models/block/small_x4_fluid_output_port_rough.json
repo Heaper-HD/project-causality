@@ -1,0 +1,7 @@
+{
+  "parent": "project_causality:block/machine_face",
+  "textures": {
+    "casing": "project_causality:block/rough/casing",
+    "front": "project_causality:block/port/fluid_small_output"
+  }
+}

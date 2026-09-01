@@ -21,4 +21,22 @@ public enum MaterialForm {
             default -> "project_causality:" + name().toLowerCase() + "/" + m.id();
         };
     }
+
+    public String family() {
+        return switch (this) {
+            case ORE, RAW -> "chunk";
+            case CRUSHED, PURIFIED, CENTRIFUGED -> "grit";
+            case DUST, SMALL_DUST, TINY_DUST -> "dust";
+            case TAILING, SLAG -> "waste";
+            case INGOT, HOT_INGOT, NUGGET -> "ingot";
+            case PLATE, DOUBLE_PLATE, FOIL -> "plate";
+            case ROD, LONG_ROD -> "rod";
+            case SCREW, BOLT -> "fastener";
+            case GEAR -> "gear";
+            case RING -> "ring";
+            case CRYSTAL -> "crystal";
+            case WIRE_FINE -> "wire";
+            case FLUID, GAS -> "fluid";
+        };
+    }
 }

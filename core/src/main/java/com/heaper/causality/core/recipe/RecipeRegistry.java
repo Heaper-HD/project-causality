@@ -25,15 +25,16 @@ public final class RecipeRegistry {
             throw new IllegalStateException("duplicate recipe id: " + recipe.id());
 
         BY_PROCESS.computeIfAbsent(recipe.process(), p -> new ArrayList<>()).add(recipe);
-        return recipe;
-    }
 
-    public static List<MachineRecipe> forProcess(ProcessType process) {
-        return Collections.unmodifiableList(BY_PROCESS.getOrDefault(process, List.of()));
+        return recipe;
     }
 
     public static Collection<MachineRecipe> all() {
         return Collections.unmodifiableCollection(BY_ID.values());
+    }
+
+    public static List<MachineRecipe> forProcess(ProcessType process) {
+        return Collections.unmodifiableList(BY_PROCESS.getOrDefault(process, List.of()));
     }
 
     public static int size() { return BY_ID.size(); }

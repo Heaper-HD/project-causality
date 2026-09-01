@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "project_causality:item/rough/plate"
+    "layer0": "project_causality:item/crystalline/plate"
   }
 }

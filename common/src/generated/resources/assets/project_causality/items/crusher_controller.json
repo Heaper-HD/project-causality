@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "project_causality:block/crusher_controller"
+    "model": "project_causality:block/crusher_controller_off_metallic"
   }
 }

@@ -1,6 +1,9 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "project_causality:item/rough/raw"
+    "layer0": "project_causality:item/rough/raw",
+    "layer1": "project_causality:item/inclusion/banding/chunk",
+    "layer2": "project_causality:item/overlay/rust/chunk",
+    "layer3": "project_causality:item/overlay/dusty/chunk"
   }
 }

@@ -9,11 +9,9 @@ import com.heaper.causality.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -23,7 +21,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public class ItemPortBE extends MachinePortBE {
+public class ItemPortBE extends MachinePortBE implements ItemPort {
 
     private final PortSize size;
     private final SlottedItemStorage storage;
@@ -38,6 +36,11 @@ public class ItemPortBE extends MachinePortBE {
 
     public SlottedItemStorage storage() {
         return storage;
+    }
+
+    @Override
+    public ItemDirectionGuard exposed() {
+        return exposed;
     }
 
     @Override

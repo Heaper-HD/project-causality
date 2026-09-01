@@ -5,7 +5,15 @@
     "tints": [
       {
         "type": "minecraft:constant",
-        "value": -5197648
+        "value": -9541046
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -3562969
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
       }
     ]
   }

@@ -1,0 +1,6 @@
+{
+  "parent": "project_causality:block/tinted_cube_all",
+  "textures": {
+    "all": "project_causality:block/metallic/casing"
+  }
+}

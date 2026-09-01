@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "project_causality:item/sphalerite_ore_purified",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2833590
+      }
+    ]
+  }
+}

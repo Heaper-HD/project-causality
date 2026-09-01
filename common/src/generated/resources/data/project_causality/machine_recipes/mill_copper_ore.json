@@ -17,15 +17,15 @@
     },
     {
       "type": "material",
-      "chance": 0.77,
-      "form": "dust",
-      "material": "chalcopyrite"
-    },
-    {
-      "type": "material",
       "chance": 0.48,
       "form": "dust",
       "material": "silica"
+    },
+    {
+      "type": "material",
+      "chance": 0.77,
+      "form": "dust",
+      "material": "chalcopyrite"
     }
   ],
   "process": "macerator",

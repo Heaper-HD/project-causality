@@ -1,0 +1,23 @@
+{
+  "duration": 120,
+  "id": "crush_limestone_rock",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "raw",
+      "material": "limestone_rock"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "count": 2,
+      "form": "crushed",
+      "material": "limestone_rock"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 120.0
+  }
+}

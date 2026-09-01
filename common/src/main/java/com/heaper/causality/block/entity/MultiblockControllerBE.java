@@ -1,7 +1,12 @@
 package com.heaper.causality.block.entity;
 
 import com.heaper.causality.ProjectCausality;
+import com.heaper.causality.block.MachinePortBlock;
+import com.heaper.causality.block.MachineState;
 import com.heaper.causality.block.MultiblockControllerBlock;
+import com.heaper.causality.client.appearance.Appearance;
+import com.heaper.causality.client.appearance.AppearanceRegistry;
+import com.heaper.causality.client.appearance.TextureSet;
 import com.heaper.causality.core.material.Material;
 import com.heaper.causality.core.material.MaterialRegistry;
 import com.heaper.causality.core.recipe.MachineRecipe;
@@ -76,17 +81,6 @@ public class MultiblockControllerBE extends BlockEntity {
                 .validate(level, worldPosition, facing(), definition.portRequirements());
     }
 
-    private void setActive(boolean active) {
-        if (level == null) return;
-
-        BlockState state = getBlockState();
-        if (state.getValue(MultiblockControllerBlock.ACTIVE) == active) return;
-
-        level.setBlock(worldPosition,
-                state.setValue(MultiblockControllerBlock.ACTIVE, active),
-                Block.UPDATE_ALL);
-    }
-
     public void tryForm(Player player) {
         if (level == null) return;
 
@@ -116,12 +110,29 @@ public class MultiblockControllerBE extends BlockEntity {
         spec = SpecCalculator.fromCasings(materials);
 
         claimPorts(worldPosition);
+        updateBlockState(casingMaterial(), MachineState.OFF);
 
         StructureIndex.register(level, worldPosition, structurePositions);
         setChanged();
 
         if (level != null)
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+    }
+
+    private void updateBlockState(@Nullable Material casing, MachineState machineState) {
+        if (level == null) return;
+
+        TextureSet set = casing == null
+                ? TextureSet.METALLIC
+                : AppearanceRegistry.get(casing).set();
+
+        BlockState current = getBlockState();
+        BlockState target = current
+                .setValue(MultiblockControllerBlock.APPEARANCE, set)
+                .setValue(MultiblockControllerBlock.STATE, machineState);
+
+        if (current == target) return;
+        level.setBlock(worldPosition, target, Block.UPDATE_CLIENTS);
     }
 
     private void claimPorts(BlockPos owner) {
@@ -134,10 +145,20 @@ public class MultiblockControllerBE extends BlockEntity {
     }
 
     private void claim(BlockPos pos, @Nullable BlockPos owner, @Nullable Material casing) {
-        if (!(level.getBlockEntity(pos) instanceof MachinePort port)) return;
+        TextureSet set = casing == null
+                ? TextureSet.METALLIC
+                : AppearanceRegistry.get(casing).set();
+
+        BlockState state = level.getBlockState(pos);
+        if (state.hasProperty(MachinePortBlock.APPEARANCE)
+        && state.getValue(MachinePortBlock.APPEARANCE) != set) {
+            level.setBlock(pos, state.setValue(MachinePortBlock.APPEARANCE, set),
+                    Block.UPDATE_CLIENTS);
+        }
+
+        if (!(level.getBlockEntity(pos) instanceof MachinePortBE port)) return;
         port.setControllerPos(owner);
-        if (port instanceof ItemPortBE itemPort)
-            itemPort.setFormedMaterial(owner == null ? null : casing);
+        port.setFormedMaterial(owner == null ? null : casing);
     }
 
     private void clearFormation() {
@@ -148,6 +169,8 @@ public class MultiblockControllerBE extends BlockEntity {
         spec = SpecSheet.EMPTY;
         inputPorts = List.of();
         outputPorts = List.of();
+
+        updateBlockState(casingMaterial(), MachineState.OFF);
 
         if (level != null) StructureIndex.unregister(level, worldPosition);
         structurePositions = List.of();
@@ -262,8 +285,10 @@ public class MultiblockControllerBE extends BlockEntity {
 
             MachineProcessor.findRunnable(process, spec, inputs, outputs)
                     .ifPresent(recipe -> {
+                        if (!MachineProcessor.consume(recipe, inputs)) return;
                         activeRecipeId = recipe.id();
                         progress = 0;
+                        updateBlockState(null, MachineState.RUNNING);
                         setChanged();
                     });
             return;
@@ -273,19 +298,23 @@ public class MultiblockControllerBE extends BlockEntity {
         if (recipe == null) {
             activeRecipeId = null;
             progress = 0;
+            updateBlockState(null, MachineState.IDLE);
             setChanged();
             return;
         }
 
-        progress++;
+        if (progress < recipe.durationTicks()) {
+            progress++;
+            setChanged();
+            return;
+        }
 
-        if (progress < recipe.durationTicks()) return;
-
-        if (MachineProcessor.complete(recipe, inputs, outputs, level.getRandom())) {
+        if (MachineProcessor.deliver(recipe, outputs, level.getRandom())) {
             activeRecipeId = null;
             progress = 0;
+            updateBlockState(null, MachineState.IDLE);
+            setChanged();
         }
-        setChanged();
     }
 
     @Override

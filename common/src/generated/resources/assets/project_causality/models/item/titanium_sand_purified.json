@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "project_causality:item/rough/purified"
+    "layer0": "project_causality:item/rough/purified",
+    "layer1": "project_causality:item/inclusion/specks/grit",
+    "layer2": "project_causality:item/overlay/dusty/grit"
   }
 }

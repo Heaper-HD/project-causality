@@ -11,15 +11,15 @@
   "outputs": [
     {
       "type": "material",
-      "chance": 0.31,
-      "form": "dust",
-      "material": "alumina"
-    },
-    {
-      "type": "material",
       "chance": 0.71,
       "form": "dust",
       "material": "hematite"
+    },
+    {
+      "type": "material",
+      "chance": 0.31,
+      "form": "dust",
+      "material": "alumina"
     },
     {
       "type": "material",

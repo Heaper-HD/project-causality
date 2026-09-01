@@ -1,0 +1,34 @@
+{
+  "duration": 120,
+  "id": "mill_limestone_rock",
+  "inputs": [
+    {
+      "type": "material",
+      "form": "crushed",
+      "material": "limestone_rock"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "material",
+      "form": "dust",
+      "material": "limestone"
+    },
+    {
+      "type": "material",
+      "chance": 0.44,
+      "form": "dust",
+      "material": "limestone"
+    },
+    {
+      "type": "material",
+      "chance": 0.17,
+      "form": "dust",
+      "material": "silica"
+    }
+  ],
+  "process": "macerator",
+  "requires": {
+    "structural_load": 120.0
+  }
+}
